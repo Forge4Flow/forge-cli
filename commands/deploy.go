@@ -1,5 +1,5 @@
-// Copyright (c) Alex Ellis 2017. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// Copyright (c) Forge4Flow DAO LLC 2024. All rights reserved.
+// Licensed under the MIT license.
 
 package commands
 
@@ -11,11 +11,11 @@ import (
 	"strings"
 	"time"
 
-	"github.com/openfaas/faas-cli/builder"
-	"github.com/openfaas/faas-cli/proxy"
-	"github.com/openfaas/faas-cli/schema"
-	"github.com/openfaas/faas-cli/stack"
-	"github.com/openfaas/faas-cli/util"
+	"github.com/forge4flow/forge-cli/builder"
+	"github.com/forge4flow/forge-cli/proxy"
+	"github.com/forge4flow/forge-cli/schema"
+	"github.com/forge4flow/forge-cli/stack"
+	"github.com/forge4flow/forge-cli/util"
 
 	"github.com/spf13/cobra"
 	yaml "gopkg.in/yaml.v3"
@@ -69,26 +69,26 @@ func init() {
 	deployCmd.Flags().Var(&tagFormat, "tag", "Override latest tag on function Docker image, accepts 'latest', 'sha', 'branch', or 'describe'")
 
 	deployCmd.Flags().BoolVar(&tlsInsecure, "tls-no-verify", false, "Disable TLS validation")
-	deployCmd.Flags().BoolVar(&envsubst, "envsubst", true, "Substitute environment variables in stack.yml file")
+	deployCmd.Flags().BoolVar(&envsubst, "envsubst", true, "Substitute environment variables in functions.yml file")
 	deployCmd.Flags().StringVarP(&token, "token", "k", "", "Pass a JWT token to use instead of basic auth")
 	// Set bash-completion.
 	_ = deployCmd.Flags().SetAnnotation("handler", cobra.BashCompSubdirsInDir, []string{})
 	deployCmd.Flags().BoolVar(&readTemplate, "read-template", true, "Read the function's template")
 
-	deployCmd.Flags().DurationVar(&timeoutOverride, "timeout", commandTimeout, "Timeout for any HTTP calls made to the OpenFaaS API.")
+	deployCmd.Flags().DurationVar(&timeoutOverride, "timeout", commandTimeout, "Timeout for any HTTP calls made to the Forge4Flow API.")
 
 	deployCmd.Flags().StringVar(&cpuRequest, "cpu-request", "", "Supply the CPU request for the function in Mi (when not using a YAML file)")
 	deployCmd.Flags().StringVar(&cpuLimit, "cpu-limit", "", "Supply the CPU limit for the function in Mi (when not using a YAML file)")
 	deployCmd.Flags().StringVar(&memoryRequest, "memory-request", "", "Supply the memory request for the function in Mi (when not using a YAML file)")
 	deployCmd.Flags().StringVar(&memoryLimit, "memory-limit", "", "Supply the memory limit for the function in Mi (when not using a YAML file)")
 
-	faasCmd.AddCommand(deployCmd)
+	forgeCmd.AddCommand(deployCmd)
 }
 
-// deployCmd handles deploying OpenFaaS function containers
+// deployCmd handles deploying Forge4Flow function containers
 var deployCmd = &cobra.Command{
 	Use: `deploy -f YAML_FILE [--replace=false]
-  faas-cli deploy --image IMAGE_NAME
+  forge-cli deploy --image IMAGE_NAME
                   --name FUNCTION_NAME
                   [--lang <ruby|python|node|csharp>]
                   [--gateway GATEWAY_URL]
@@ -108,23 +108,23 @@ var deployCmd = &cobra.Command{
 				  [--readonly=false]
 				  [--tls-no-verify]`,
 
-	Short: "Deploy OpenFaaS functions",
-	Long: `Deploys OpenFaaS function containers either via the supplied YAML config using
+	Short: "Deploy Forge4Flow functions",
+	Long: `Deploys Forge4Flow function containers either via the supplied YAML config using
 the "--yaml" flag (which may contain multiple function definitions), or directly
 via flags. Note: --replace and --update are mutually exclusive.`,
-	Example: `  faas-cli deploy -f https://domain/path/myfunctions.yml
-  faas-cli deploy -f ./stack.yml
-  faas-cli deploy -f ./stack.yml --label canary=true
-  faas-cli deploy -f ./stack.yml --annotation user=true
-  faas-cli deploy -f ./stack.yml --filter "*gif*" --secret dockerhuborg
-  faas-cli deploy -f ./stack.yml --regex "fn[0-9]_.*"
-  faas-cli deploy -f ./stack.yml --replace=false --update=true
-  faas-cli deploy -f ./stack.yml --replace=true --update=false
-  faas-cli deploy -f ./stack.yml --tag sha
-  faas-cli deploy -f ./stack.yml --tag branch
-  faas-cli deploy -f ./stack.yml --tag describe
-  faas-cli deploy --image=alexellis/faas-url-ping --name=url-ping
-  faas-cli deploy --image=my_image --name=my_fn --handler=/path/to/fn/
+	Example: `  forge-cli deploy -f https://domain/path/myfunctions.yml
+  forge-cli deploy -f ./functions.yml
+  forge-cli deploy -f ./functions.yml --label canary=true
+  forge-cli deploy -f ./functions.yml --annotation user=true
+  forge-cli deploy -f ./functions.yml --filter "*gif*" --secret dockerhuborg
+  forge-cli deploy -f ./functions.yml --regex "fn[0-9]_.*"
+  forge-cli deploy -f ./functions.yml --replace=false --update=true
+  forge-cli deploy -f ./functions.yml --replace=true --update=false
+  forge-cli deploy -f ./functions.yml --tag sha
+  forge-cli deploy -f ./functions.yml --tag branch
+  forge-cli deploy -f ./functions.yml --tag describe
+  forge-cli deploy --image=alexellis/faas-url-ping --name=url-ping
+  forge-cli deploy --image=my_image --name=my_fn --handler=/path/to/fn/
                   --gateway=http://remote-site.com:8080 --lang=python
                   --env=MYVAR=myval`,
 	PreRunE: preRunDeploy,
@@ -230,7 +230,7 @@ func runDeployCommand(args []string, image string, fprocess string, functionName
 
 					function.FProcess, fprocessErr = deriveFprocess(function)
 					if fprocessErr != nil {
-						return fmt.Errorf(`template directory may be missing or invalid, please run "faas-cli template pull"
+						return fmt.Errorf(`template directory may be missing or invalid, please run "forge-cli template pull"
 Error: %s`, fprocessErr.Error())
 					}
 				}

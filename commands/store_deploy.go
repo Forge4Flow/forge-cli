@@ -1,4 +1,4 @@
-// Copyright (c) OpenFaaS Author(s) 2018. All rights reserved.
+// Copyright (c) Forge4Flow Author(s) 2018. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 package commands
@@ -8,9 +8,9 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/openfaas/faas-cli/util"
+	"github.com/forge4flow/forge-cli/util"
 
-	"github.com/openfaas/faas-cli/proxy"
+	"github.com/forge4flow/forge-cli/proxy"
 	"github.com/spf13/cobra"
 )
 
@@ -29,7 +29,7 @@ func init() {
 	storeDeployCmd.Flags().StringArrayVarP(&storeDeployFlags.annotationOpts, "annotation", "", []string{}, "Set one or more annotation (ANNOTATION=VALUE)")
 	storeDeployCmd.Flags().BoolVar(&tlsInsecure, "tls-no-verify", false, "Disable TLS validation")
 	storeDeployCmd.Flags().StringVarP(&token, "token", "k", "", "Pass a JWT token to use instead of basic auth")
-	storeDeployCmd.Flags().DurationVar(&timeoutOverride, "timeout", commandTimeout, "Timeout for any HTTP calls made to the OpenFaaS API.")
+	storeDeployCmd.Flags().DurationVar(&timeoutOverride, "timeout", commandTimeout, "Timeout for any HTTP calls made to the Forge4Flow API.")
 
 	storeDeployCmd.Flags().StringVar(&cpuRequest, "cpu-request", "", "Supply the CPU request for the function in Mi")
 	storeDeployCmd.Flags().StringVar(&cpuLimit, "cpu-limit", "", "Supply the CPU limit for the function in Mi")
@@ -56,10 +56,10 @@ var storeDeployCmd = &cobra.Command{
 			[--url STORE_URL]
 			[--tls-no-verify=false]`,
 
-	Short: "Deploy OpenFaaS functions from a store",
-	Long:  `Same as faas-cli deploy except that function is pre-loaded with arguments from the store`,
-	Example: `  faas-cli store deploy figlet
-  faas-cli store deploy figlet \
+	Short: "Deploy Forge4Flow functions from a store",
+	Long:  `Same as forge-cli deploy except that function is pre-loaded with arguments from the store`,
+	Example: `  forge-cli store deploy figlet
+  forge-cli store deploy figlet \
     --gateway=http://127.0.0.1:8080 \
     --env=MYVAR=myval`,
 	RunE:    runStoreDeploy,

@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"strings"
 
-	"github.com/openfaas/faas-cli/flags"
+	"github.com/forge4flow/forge-cli/flags"
 	"github.com/openfaas/faas-provider/logs"
 )
 

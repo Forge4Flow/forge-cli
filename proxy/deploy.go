@@ -1,5 +1,5 @@
-// Copyright (c) Alex Ellis 2017. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// Copyright (c) Forge4Flow DAO LLC 2024. All rights reserved.
+// Licensed under the MIT license.
 
 package proxy
 
@@ -13,7 +13,7 @@ import (
 	"net/url"
 	"time"
 
-	"github.com/openfaas/faas-cli/stack"
+	"github.com/forge4flow/forge-cli/stack"
 
 	types "github.com/openfaas/faas-provider/types"
 )
@@ -77,7 +77,7 @@ func (c *Client) DeployFunction(context context.Context, spec *DeployFunctionSpe
 	return statusCode
 }
 
-// deploy a function to an OpenFaaS gateway over REST
+// deploy a function to an Forge4Flow gateway over REST
 func (c *Client) deploy(context context.Context, spec *DeployFunctionSpec, update bool) (int, string) {
 
 	var deployOutput string
@@ -156,7 +156,7 @@ func (c *Client) deploy(context context.Context, spec *DeployFunctionSpec, updat
 	res, err := c.doRequest(context, request)
 
 	if err != nil {
-		deployOutput += fmt.Sprintln("Is OpenFaaS deployed? Do you need to specify the --gateway flag?")
+		deployOutput += fmt.Sprintln("Is Forge4Flow deployed? Do you need to specify the --gateway flag?")
 		deployOutput += fmt.Sprintln(err)
 		return http.StatusInternalServerError, deployOutput
 	}
@@ -172,7 +172,7 @@ func (c *Client) deploy(context context.Context, spec *DeployFunctionSpec, updat
 		deployedURL := fmt.Sprintf("URL: %s/function/%s", c.GatewayURL.String(), generateFuncStr(spec))
 		deployOutput += fmt.Sprintln(deployedURL)
 	case http.StatusUnauthorized:
-		deployOutput += fmt.Sprintln("unauthorized access, run \"faas-cli login\" to setup authentication for this server")
+		deployOutput += fmt.Sprintln("unauthorized access, run \"forge-cli login\" to setup authentication for this server")
 
 	default:
 		bytesOut, err := io.ReadAll(res.Body)

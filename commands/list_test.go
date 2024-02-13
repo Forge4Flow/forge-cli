@@ -1,5 +1,5 @@
-// Copyright (c) Alex Ellis 2017. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// Copyright (c) Forge4Flow DAO LLC 2024. All rights reserved.
+// Licensed under the MIT license.
 
 package commands
 
@@ -8,7 +8,7 @@ import (
 	"regexp"
 	"testing"
 
-	"github.com/openfaas/faas-cli/test"
+	"github.com/forge4flow/forge-cli/test"
 	types "github.com/openfaas/faas-provider/types"
 )
 
@@ -41,11 +41,11 @@ func Test_list(t *testing.T) {
 	resetForTest()
 
 	stdOut := test.CaptureStdout(func() {
-		faasCmd.SetArgs([]string{
+		forgeCmd.SetArgs([]string{
 			"list",
 			"--gateway=" + s.URL,
 		})
-		faasCmd.Execute()
+		forgeCmd.Execute()
 	})
 
 	matches := regexp.MustCompile(`(?m:function-test-[12])`).FindAllStringSubmatch(stdOut, 2)
@@ -58,10 +58,10 @@ func Test_list_errors(t *testing.T) {
 
 	resetForTest()
 
-	faasCmd.SetArgs([]string{
+	forgeCmd.SetArgs([]string{
 		"list", "--gateway", "bad-gateway",
 	})
-	err := faasCmd.Execute()
+	err := forgeCmd.Execute()
 
 	if err == nil {
 		t.Fatal("No error found while testing bad gateway")
@@ -69,10 +69,10 @@ func Test_list_errors(t *testing.T) {
 
 	resetForTest()
 
-	faasCmd.SetArgs([]string{
+	forgeCmd.SetArgs([]string{
 		"list", "--yaml", "non-existant-yaml",
 	})
-	err = faasCmd.Execute()
+	err = forgeCmd.Execute()
 
 	if err == nil {
 		t.Fatal("No error found while testing missing yaml")

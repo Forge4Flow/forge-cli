@@ -12,9 +12,9 @@ func Test_ValidShell(t *testing.T) {
 	}
 
 	for _, arg := range testArgs {
-		faasCmd.SetArgs(arg)
+		forgeCmd.SetArgs(arg)
 
-		err := faasCmd.Execute()
+		err := forgeCmd.Execute()
 
 		if err != nil {
 			t.Errorf("err was supposed to be nil but it was: %s", err)

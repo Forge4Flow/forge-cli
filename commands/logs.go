@@ -1,4 +1,4 @@
-// Copyright (c) OpenFaaS Author(s) 2019. All rights reserved.
+// Copyright (c) Forge4Flow Author(s) 2019. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 package commands
@@ -12,10 +12,10 @@ import (
 	"os"
 	"time"
 
-	"github.com/openfaas/faas-cli/flags"
+	"github.com/forge4flow/forge-cli/flags"
 	"github.com/openfaas/faas-provider/logs"
 
-	"github.com/openfaas/faas-cli/proxy"
+	"github.com/forge4flow/forge-cli/proxy"
 	"github.com/spf13/cobra"
 )
 
@@ -40,18 +40,18 @@ type logFlags struct {
 func init() {
 	initLogCmdFlags(functionLogsCmd)
 
-	faasCmd.AddCommand(functionLogsCmd)
+	forgeCmd.AddCommand(functionLogsCmd)
 }
 
 var functionLogsCmd = &cobra.Command{
 	Use:   `logs <NAME> [--tls-no-verify] [--gateway] [--output=text/json]`,
 	Short: "Fetch logs for a functions",
 	Long:  "Fetch logs for a given function name in plain text or JSON format.",
-	Example: `  faas-cli logs FN
-  faas-cli logs FN --output=json
-  faas-cli logs FN --lines=5
-  faas-cli logs FN --tail=false --since=10m
-  faas-cli logs FN --tail=false --since=2010-01-01T00:00:00Z
+	Example: `  forge-cli logs FN
+  forge-cli logs FN --output=json
+  forge-cli logs FN --lines=5
+  forge-cli logs FN --tail=false --since=10m
+  forge-cli logs FN --tail=false --since=2010-01-01T00:00:00Z
 `,
 	Args:    cobra.MaximumNArgs(1),
 	RunE:    runLogs,

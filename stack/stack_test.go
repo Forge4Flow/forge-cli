@@ -1,5 +1,5 @@
-// Copyright (c) Alex Ellis 2017. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// Copyright (c) Forge4Flow DAO LLC 2024. All rights reserved.
+// Licensed under the MIT license.
 
 package stack
 
@@ -14,7 +14,7 @@ import (
 
 const TestData_1 string = `version: 1.0
 provider:
-  name: openfaas
+  name: functions4flow
   gateway: http://127.0.0.1:8080
   network: "func_functions"
 
@@ -48,7 +48,7 @@ functions:
 
 const TestData_2 string = `version: 1.0
 provider:
-  name: openfaas
+  name: functions4flow
   gateway: http://127.0.0.1:8080
   network: "func_functions"
 
@@ -335,23 +335,23 @@ func Test_ParseYAMLData_ProviderValues(t *testing.T) {
 		file          string
 	}{
 		{
-			title:         "Provider is openfaas and gives no error",
-			provider:      "openfaas",
+			title:         "Provider is functions4flow and gives no error",
+			provider:      "functions4flow",
 			expectedError: "",
 			file: `version: 1.0
 provider:
-  name: openfaas
+  name: functions4flow
   gateway: http://127.0.0.1:8080
   network: "func_functions"
 `,
 		},
 		{
-			title:         "Provider is openfaas and gives no error",
-			provider:      "openfaas",
+			title:         "Provider is functions4flow and gives no error",
+			provider:      "functions4flow",
 			expectedError: "",
 			file: `version: 1.0
 provider:
-  name: openfaas
+  name: functions4flow
   gateway: http://127.0.0.1:8080
   network: "func_functions"
 `,
@@ -359,7 +359,7 @@ provider:
 		{
 			title:         "Provider is faas and gives error",
 			provider:      "faas",
-			expectedError: `['openfaas'] is the only valid "provider.name" for the OpenFaaS CLI, but you gave: faas`,
+			expectedError: `['functions4flow'] is the only valid "provider.name" for the Forge4Flow CLI, but you gave: faas`,
 			file: `version: 1.0
 provider:
   name: faas
@@ -370,7 +370,7 @@ provider:
 		{
 			title:         "Provider is serverless and gives error",
 			provider:      "faas",
-			expectedError: `['openfaas'] is the only valid "provider.name" for the OpenFaaS CLI, but you gave: serverless`,
+			expectedError: `['functions4flow'] is the only valid "provider.name" for the Forge4Flow CLI, but you gave: serverless`,
 			file: `version: 1.0
 provider:
   name: serverless
@@ -409,7 +409,7 @@ func Test_ParseYAMLData_SchemaVersionValues(t *testing.T) {
 			expectedError: "",
 			file: `
 provider:
-  name: openfaas
+  name: functions4flow
   gateway: http://127.0.0.1:8080
   network: "func_functions"
 `,
@@ -421,7 +421,7 @@ provider:
 			expectedError: `(?m: are the only valid versions for the stack file - found)`,
 			file: `version: 1.35
 provider:
-  name: openfaas
+  name: functions4flow
   gateway: http://127.0.0.1:8080
   network: "func_functions"
 `,
@@ -433,7 +433,7 @@ provider:
 			expectedError: "",
 			file: `version: 1.0
 provider:
-  name: serverless-openfaas
+  name: serverless-functions4flow
   gateway: http://127.0.0.1:8080
   network: "func_functions"
 `,
@@ -457,7 +457,7 @@ func Test_substituteEnvironment_DefaultOverridden(t *testing.T) {
 
 	os.Setenv("USER", "alexellis2")
 	want := "alexellis2/image:latest"
-	template := "${USER:-openfaas}/image:latest"
+	template := "${USER:-functions4flow}/image:latest"
 	res, err := substituteEnvironment([]byte(template))
 
 	if err != nil {
@@ -472,8 +472,8 @@ func Test_substituteEnvironment_DefaultOverridden(t *testing.T) {
 func Test_substituteEnvironment_DefaultLeftEmpty(t *testing.T) {
 
 	os.Setenv("USER", "")
-	want := "openfaas/image:latest"
-	template := "${USER:-openfaas}/image:latest"
+	want := "functions4flow/image:latest"
+	template := "${USER:-functions4flow}/image:latest"
 	res, err := substituteEnvironment([]byte(template))
 
 	if err != nil {
@@ -488,8 +488,8 @@ func Test_substituteEnvironment_DefaultLeftEmpty(t *testing.T) {
 func Test_substituteEnvironment_DefaultLeftWhenNil(t *testing.T) {
 
 	os.Unsetenv("USER")
-	want := "openfaas/image:latest"
-	template := "${USER:-openfaas}/image:latest"
+	want := "functions4flow/image:latest"
+	template := "${USER:-functions4flow}/image:latest"
 	res, err := substituteEnvironment([]byte(template))
 
 	if err != nil {

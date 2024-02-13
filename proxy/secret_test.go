@@ -6,8 +6,8 @@ import (
 	"regexp"
 	"testing"
 
+	"github.com/forge4flow/forge-cli/test"
 	"github.com/google/go-cmp/cmp"
-	"github.com/openfaas/faas-cli/test"
 	types "github.com/openfaas/faas-provider/types"
 )
 
@@ -87,7 +87,7 @@ func Test_GetSecretList_Unauthorized401(t *testing.T) {
 		t.Fatalf("Error was not returned")
 	}
 
-	r := regexp.MustCompile(`(?m:unauthorized access, run \"faas-cli login\" to setup authentication for this server)`)
+	r := regexp.MustCompile(`(?m:unauthorized access, run \"forge-cli login\" to setup authentication for this server)`)
 	if !r.MatchString(err.Error()) {
 		t.Fatalf("Error not matched: %s", err)
 	}
@@ -174,7 +174,7 @@ func Test_CreateSecret_Unauthorized401(t *testing.T) {
 		t.Errorf("expected: %d, got: %d", http.StatusUnauthorized, status)
 	}
 
-	r := regexp.MustCompile(`(?m:unauthorized access, run \"faas-cli login\" to setup authentication for this server)`)
+	r := regexp.MustCompile(`(?m:unauthorized access, run \"forge-cli login\" to setup authentication for this server)`)
 	if !r.MatchString(output) {
 		t.Fatalf("Error not matched: %s", output)
 	}

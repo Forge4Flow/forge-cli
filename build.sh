@@ -6,19 +6,19 @@ if [ $1 ] ; then
   eTAG=$1
 fi
 
-echo Building openfaas/faas-cli:$eTAG
+echo Building forge4flow/forge-cli:$eTAG
 
-docker build --build-arg http_proxy=$http_proxy --build-arg https_proxy=$https_proxy --target release -t openfaas/faas-cli:$eTAG .
+docker build --build-arg http_proxy=$http_proxy --build-arg https_proxy=$https_proxy --target release -t forge4flow/forge-cli:$eTAG .
 
-echo Building openfaas/faas-cli:$eTAG-root
+echo Building forge4flow/forge-cli:$eTAG-root
 
-docker build --build-arg http_proxy=$http_proxy --build-arg https_proxy=$https_proxy --target root -t openfaas/faas-cli:$eTAG-root .
+docker build --build-arg http_proxy=$http_proxy --build-arg https_proxy=$https_proxy --target root -t forge4flow/forge-cli:$eTAG-root .
 
 if [ $? == 0 ] ; then
 
-  docker create --name faas-cli openfaas/faas-cli:$eTAG && \
-  docker cp faas-cli:/usr/bin/faas-cli . && \
-  docker rm -f faas-cli
+  docker create --name forge-cli forge4flow/forge-cli:$eTAG && \
+  docker cp forge-cli:/usr/bin/forge-cli . && \
+  docker rm -f forge-cli
 
 else
  exit 1

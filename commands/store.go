@@ -1,5 +1,5 @@
-// Copyright (c) Alex Ellis 2017. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// Copyright (c) Forge4Flow DAO LLC 2024. All rights reserved.
+// Licensed under the MIT license.
 
 package commands
 
@@ -11,8 +11,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/openfaas/faas-cli/proxy"
-	storeV2 "github.com/openfaas/faas-cli/schema/store/v2"
+	"github.com/forge4flow/forge-cli/proxy"
+	storeV2 "github.com/forge4flow/forge-cli/schema/store/v2"
 	"github.com/spf13/cobra"
 )
 
@@ -42,13 +42,13 @@ func init() {
 	storeCmd.PersistentFlags().StringVarP(&storeAddress, "url", "u", defaultStore, "Alternative Store URL starting with http(s)://")
 	storeCmd.PersistentFlags().StringVarP(&platformValue, "platform", "p", Platform, "Target platform for store")
 
-	faasCmd.AddCommand(storeCmd)
+	forgeCmd.AddCommand(storeCmd)
 }
 
 var storeCmd = &cobra.Command{
 	Use:   `store`,
-	Short: "OpenFaaS store commands",
-	Long:  "Allows browsing and deploying OpenFaaS functions from a store",
+	Short: "Forge4Flow store commands",
+	Long:  "Allows browsing and deploying Forge4Flow functions from a store",
 }
 
 func storeList(store string) ([]storeV2.StoreFunction, error) {
@@ -64,7 +64,7 @@ func storeList(store string) ([]storeV2.StoreFunction, error) {
 
 	res, err := client.Get(store)
 	if err != nil {
-		return nil, fmt.Errorf("cannot connect to OpenFaaS store at URL: %s", store)
+		return nil, fmt.Errorf("cannot connect to Forge4Flow store at URL: %s", store)
 	}
 
 	if res.Body != nil {
@@ -75,12 +75,12 @@ func storeList(store string) ([]storeV2.StoreFunction, error) {
 	case http.StatusOK:
 		bytesOut, err := io.ReadAll(res.Body)
 		if err != nil {
-			return nil, fmt.Errorf("cannot read result from OpenFaaS store at URL: %s", store)
+			return nil, fmt.Errorf("cannot read result from Forge4Flow store at URL: %s", store)
 		}
 
 		jsonErr := json.Unmarshal(bytesOut, &storeData)
 		if jsonErr != nil {
-			return nil, fmt.Errorf("cannot parse result from OpenFaaS store at URL: %s\n%s", store, jsonErr.Error())
+			return nil, fmt.Errorf("cannot parse result from Forge4Flow store at URL: %s\n%s", store, jsonErr.Error())
 		}
 	default:
 		bytesOut, err := io.ReadAll(res.Body)

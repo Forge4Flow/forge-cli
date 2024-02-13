@@ -1,5 +1,5 @@
-// Copyright (c) Alex Ellis 2017. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// Copyright (c) Forge4Flow DAO LLC 2024. All rights reserved.
+// Licensed under the MIT license.
 
 package builder
 
@@ -20,8 +20,8 @@ import (
 	"strings"
 
 	v2execute "github.com/alexellis/go-execute/v2"
-	"github.com/openfaas/faas-cli/schema"
-	"github.com/openfaas/faas-cli/stack"
+	"github.com/forge4flow/forge-cli/schema"
+	"github.com/forge4flow/forge-cli/stack"
 
 	hmac "github.com/alexellis/hmac/v2"
 )
@@ -37,7 +37,7 @@ type builderResult struct {
 	Status string   `json:"status"`
 }
 
-const BuilderConfigFilename = "com.openfaas.docker.config"
+const BuilderConfigFilename = "com.forge4flow.docker.config"
 
 // PublishImage will publish images as multi-arch
 // TODO: refactor signature to a struct to simplify the length of the method header

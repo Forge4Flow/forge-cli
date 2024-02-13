@@ -1,4 +1,4 @@
-// Copyright (c) OpenFaaS Author(s) 2019. All rights reserved.
+// Copyright (c) Forge4Flow Author(s) 2019. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 package commands
@@ -11,7 +11,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/openfaas/faas-cli/proxy"
+	"github.com/forge4flow/forge-cli/proxy"
 	types "github.com/openfaas/faas-provider/types"
 	"github.com/spf13/cobra"
 )
@@ -32,10 +32,10 @@ var secretCreateCmd = &cobra.Command{
 			[--tls-no-verify]`,
 	Short: "Create a new secret",
 	Long:  `The create command creates a new secret from file, literal or STDIN`,
-	Example: `faas-cli secret create secret-name --from-literal=secret-value
-faas-cli secret create secret-name --from-literal=secret-value --gateway=http://127.0.0.1:8080
-faas-cli secret create secret-name --from-file=/path/to/secret/file --gateway=http://127.0.0.1:8080
-cat /path/to/secret/file | faas-cli secret create secret-name`,
+	Example: `forge-cli secret create secret-name --from-literal=secret-value
+forge-cli secret create secret-name --from-literal=secret-value --gateway=http://127.0.0.1:8080
+forge-cli secret create secret-name --from-file=/path/to/secret/file --gateway=http://127.0.0.1:8080
+cat /path/to/secret/file | forge-cli secret create secret-name`,
 	RunE:    runSecretCreate,
 	PreRunE: preRunSecretCreate,
 }

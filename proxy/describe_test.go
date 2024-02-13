@@ -1,4 +1,4 @@
-// Copyright (c) OpenFaaS Author(s) 2018. All rights reserved.
+// Copyright (c) Forge4Flow Author(s) 2018. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 package proxy
@@ -11,7 +11,7 @@ import (
 	"regexp"
 	"testing"
 
-	"github.com/openfaas/faas-cli/test"
+	"github.com/forge4flow/forge-cli/test"
 	types "github.com/openfaas/faas-provider/types"
 )
 

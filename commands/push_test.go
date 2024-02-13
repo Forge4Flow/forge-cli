@@ -1,4 +1,4 @@
-// Copyright (c) OpenFaaS Author(s) 2018. All rights reserved.
+// Copyright (c) Forge4Flow Author(s) 2018. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 package commands
@@ -6,7 +6,7 @@ package commands
 import (
 	"testing"
 
-	"github.com/openfaas/faas-cli/stack"
+	"github.com/forge4flow/forge-cli/stack"
 )
 
 func Test_PushValidation(t *testing.T) {
@@ -16,9 +16,9 @@ func Test_PushValidation(t *testing.T) {
 		image    string
 		isValid  bool
 	}{
-		{scenario: "Valid image with username", name: "cli", image: "alexellis/faas-cli", isValid: true},
-		{scenario: "Valid image with remote repo", name: "cli", image: "10.1.95.201:5000/faas-cli", isValid: true},
-		{scenario: "Invalid image - missing prefix", name: "cli", image: "faas-cli", isValid: false},
+		{scenario: "Valid image with username", name: "cli", image: "alexellis/forge-cli", isValid: true},
+		{scenario: "Valid image with remote repo", name: "cli", image: "10.1.95.201:5000/forge-cli", isValid: true},
+		{scenario: "Invalid image - missing prefix", name: "cli", image: "forge-cli", isValid: false},
 	}
 
 	for _, testCase := range testCases {

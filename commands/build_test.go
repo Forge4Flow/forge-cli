@@ -1,4 +1,4 @@
-// Copyright (c) OpenFaaS Author(s) 2017. All rights reserved.
+// Copyright (c) Forge4Flow Author(s) 2017. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 package commands
@@ -18,8 +18,8 @@ func Test_build(t *testing.T) {
 	}
 
 	for _, aTest := range aTests {
-		faasCmd.SetArgs(aTest)
-		err := faasCmd.Execute()
+		forgeCmd.SetArgs(aTest)
+		err := forgeCmd.Execute()
 		if err == nil {
 			t.Fatalf("No error found while testing \n%v", err)
 		}

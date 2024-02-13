@@ -1,4 +1,4 @@
-// Copyright (c) OpenFaaS Author(s) 2018. All rights reserved.
+// Copyright (c) Forge4Flow Author(s) 2018. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 package commands
@@ -14,9 +14,9 @@ import (
 	"strings"
 	"text/tabwriter"
 
-	"github.com/openfaas/faas-cli/proxy"
-	"github.com/openfaas/faas-cli/schema"
-	"github.com/openfaas/faas-cli/stack"
+	"github.com/forge4flow/forge-cli/proxy"
+	"github.com/forge4flow/forge-cli/schema"
+	"github.com/forge4flow/forge-cli/stack"
 	"github.com/openfaas/faas-provider/types"
 
 	"github.com/spf13/cobra"
@@ -26,21 +26,21 @@ func init() {
 	describeCmd.Flags().StringVar(&functionName, "name", "", "Name of the function")
 	describeCmd.Flags().StringVarP(&gateway, "gateway", "g", defaultGateway, "Gateway URL starting with http(s)://")
 	describeCmd.Flags().BoolVar(&tlsInsecure, "tls-no-verify", false, "Disable TLS validation")
-	describeCmd.Flags().BoolVar(&envsubst, "envsubst", true, "Substitute environment variables in stack.yml file")
+	describeCmd.Flags().BoolVar(&envsubst, "envsubst", true, "Substitute environment variables in functions.yml file")
 	describeCmd.Flags().StringVarP(&token, "token", "k", "", "Pass a JWT token to use instead of basic auth")
 	describeCmd.Flags().StringVarP(&functionNamespace, "namespace", "n", "", "Namespace of the function")
 	describeCmd.Flags().BoolVarP(&verbose, "verbose", "v", false, "Enable verbose output")
 
-	faasCmd.AddCommand(describeCmd)
+	forgeCmd.AddCommand(describeCmd)
 }
 
 var describeCmd = &cobra.Command{
 	Use:   "describe FUNCTION_NAME [--gateway GATEWAY_URL]",
-	Short: "Describe an OpenFaaS function",
-	Long:  `Display details of an OpenFaaS function`,
-	Example: `faas-cli describe figlet
-faas-cli describe env --gateway http://127.0.0.1:8080
-faas-cli describe echo -g http://127.0.0.1.8080`,
+	Short: "Describe an Forge4Flow function",
+	Long:  `Display details of an Forge4Flow function`,
+	Example: `forge-cli describe figlet
+forge-cli describe env --gateway http://127.0.0.1:8080
+forge-cli describe echo -g http://127.0.0.1.8080`,
 	PreRunE: preRunDescribe,
 	RunE:    runDescribe,
 }

@@ -1,4 +1,4 @@
-// Copyright (c) OpenFaaS Author(s) 2018. All rights reserved.
+// Copyright (c) Forge4Flow Author(s) 2018. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 package commands
@@ -25,7 +25,7 @@ var (
 func init() {
 
 	upFlagset := pflag.NewFlagSet("up", pflag.ExitOnError)
-	upFlagset.BoolVar(&usePublish, "publish", false, "Use faas-cli publish instead of faas-cli build followed by faas-cli push")
+	upFlagset.BoolVar(&usePublish, "publish", false, "Use forge-cli publish instead of forge-cli build followed by forge-cli push")
 
 	upFlagset.BoolVar(&skipPush, "skip-push", false, "Skip pushing function to remote registry")
 	upFlagset.BoolVar(&skipDeploy, "skip-deploy", false, "Skip function deployment")
@@ -35,23 +35,23 @@ func init() {
 	upFlagset.BoolVar(&watch, "watch", false, "Watch for changes in files and re-deploy")
 	upCmd.Flags().AddFlagSet(upFlagset)
 
-	build, _, _ := faasCmd.Find([]string{"build"})
+	build, _, _ := forgeCmd.Find([]string{"build"})
 	upCmd.Flags().AddFlagSet(build.Flags())
 
-	push, _, _ := faasCmd.Find([]string{"push"})
+	push, _, _ := forgeCmd.Find([]string{"push"})
 	upCmd.Flags().AddFlagSet(push.Flags())
 
-	deploy, _, _ := faasCmd.Find([]string{"deploy"})
+	deploy, _, _ := forgeCmd.Find([]string{"deploy"})
 	upCmd.Flags().AddFlagSet(deploy.Flags())
 
-	faasCmd.AddCommand(upCmd)
+	forgeCmd.AddCommand(upCmd)
 }
 
 // upCmd is a wrapper to the build, push and deploy commands
 var upCmd = &cobra.Command{
 	Use:   `up -f [YAML_FILE] [--skip-push] [--skip-deploy] [flags from build, push, deploy]`,
-	Short: "Builds, pushes and deploys OpenFaaS function containers",
-	Long: `Build, Push, and Deploy OpenFaaS function containers either via the
+	Short: "Builds, pushes and deploys Forge4Flow function containers",
+	Long: `Build, Push, and Deploy Forge4Flow function containers either via the
 supplied YAML config using the "--yaml" flag (which may contain multiple function
 definitions), or directly via flags.
 
@@ -61,16 +61,16 @@ and the deploy step with --skip-deploy.
 Note: All flags from the build, push and deploy flags are valid and can be combined,
 see the --help text for those commands for details.`,
 	Example: `  # Deploy everything
-  faas-cli up
+  forge-cli up
 
   # Deploy a named function
-  faas-cli up --filter echo
+  forge-cli up --filter echo
 
   # Deploy but skip the push step
-  faas-cli up --skip-push
+  forge-cli up --skip-push
 
   # Build but skip pushing and use a build-arg
-  faas-cli up --skip-push \
+  forge-cli up --skip-push \
   	--build-arg GO111MODULE=on
 	`,
 	PreRunE: preRunUp,

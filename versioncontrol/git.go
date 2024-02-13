@@ -3,7 +3,7 @@ package versioncontrol
 import (
 	"strings"
 
-	"github.com/openfaas/faas-cli/exec"
+	"github.com/forge4flow/forge-cli/exec"
 )
 
 // GitClone defines the command to clone a repo into a directory
@@ -46,7 +46,7 @@ var GitInitRepo2_28_0 = &vcsCmd{
 		"init {dir} --initial-branch=master",
 		"config core.autocrlf false",
 		"config user.email \"contact@openfaas.com\"",
-		"config user.name \"OpenFaaS\"",
+		"config user.name \"Forge4Flow\"",
 		"add {dir}",
 		"commit -m \"Test-commit\"",
 	},
@@ -60,7 +60,7 @@ var GitInitRepoClassic = &vcsCmd{
 		"init {dir}",
 		"config core.autocrlf false",
 		"config user.email \"contact@openfaas.com\"",
-		"config user.name \"OpenFaaS\"",
+		"config user.name \"Forge4Flow\"",
 		"add {dir}",
 		"commit -m \"Test-commit\"",
 	},

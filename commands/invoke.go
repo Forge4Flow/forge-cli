@@ -1,5 +1,5 @@
-// Copyright (c) Alex Ellis 2017. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// Copyright (c) Forge4Flow DAO LLC 2024. All rights reserved.
+// Licensed under the MIT license.
 
 package commands
 
@@ -10,8 +10,8 @@ import (
 	"os"
 
 	"github.com/alexellis/hmac"
-	"github.com/openfaas/faas-cli/proxy"
-	"github.com/openfaas/faas-cli/stack"
+	"github.com/forge4flow/forge-cli/proxy"
+	"github.com/forge4flow/forge-cli/stack"
 	"github.com/spf13/cobra"
 )
 
@@ -42,23 +42,23 @@ func init() {
 	invokeCmd.Flags().StringVar(&sigHeader, "sign", "", "name of HTTP request header to hold the signature")
 	invokeCmd.Flags().StringVar(&key, "key", "", "key to be used to sign the request (must be used with --sign)")
 
-	invokeCmd.Flags().BoolVar(&envsubst, "envsubst", true, "Substitute environment variables in stack.yml file")
+	invokeCmd.Flags().BoolVar(&envsubst, "envsubst", true, "Substitute environment variables in functions.yml file")
 
-	faasCmd.AddCommand(invokeCmd)
+	forgeCmd.AddCommand(invokeCmd)
 }
 
 var invokeCmd = &cobra.Command{
 	Use:   `invoke FUNCTION_NAME [--gateway GATEWAY_URL] [--content-type CONTENT_TYPE] [--query PARAM=VALUE] [--header PARAM=VALUE] [--method HTTP_METHOD]`,
-	Short: "Invoke an OpenFaaS function",
-	Long:  `Invokes an OpenFaaS function and reads from STDIN for the body of the request`,
-	Example: `  faas-cli invoke echo --gateway https://host:port
-  faas-cli invoke echo --gateway https://host:port --content-type application/json
-  faas-cli invoke env --query repo=faas-cli --query org=openfaas
-  faas-cli invoke env --header X-Ping-Url=http://request.bin/etc
-  faas-cli invoke resize-img --async -H "X-Callback-Url=http://gateway:8080/function/send2slack" < image.png
-  faas-cli invoke env -H X-Ping-Url=http://request.bin/etc
-  faas-cli invoke flask --method GET --namespace dev
-  faas-cli invoke env --sign X-GitHub-Event --key yoursecret`,
+	Short: "Invoke an Forge4Flow function",
+	Long:  `Invokes an Forge4Flow function and reads from STDIN for the body of the request`,
+	Example: `  forge-cli invoke echo --gateway https://host:port
+  forge-cli invoke echo --gateway https://host:port --content-type application/json
+  forge-cli invoke env --query repo=forge-cli --query org=openfaas
+  forge-cli invoke env --header X-Ping-Url=http://request.bin/etc
+  forge-cli invoke resize-img --async -H "X-Callback-Url=http://gateway:8080/function/send2slack" < image.png
+  forge-cli invoke env -H X-Ping-Url=http://request.bin/etc
+  forge-cli invoke flask --method GET --namespace dev
+  forge-cli invoke env --sign X-GitHub-Event --key yoursecret`,
 	RunE: runInvoke,
 }
 

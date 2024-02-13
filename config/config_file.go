@@ -1,4 +1,4 @@
-// Copyright (c) OpenFaaS Author(s) 2017. All rights reserved.
+// Copyright (c) Forge4Flow Author(s) 2017. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 package config
@@ -29,7 +29,7 @@ const (
 	Oauth2AuthType = "oauth2"
 
 	// ConfigLocationEnv is the name of he env variable used
-	// to configure the location of the faas-cli config folder.
+	// to configure the location of the forge-cli config folder.
 	// When not set, DefaultDir location is used.
 	ConfigLocationEnv string = "OPENFAAS_CONFIG"
 
@@ -45,7 +45,7 @@ const (
 	DefaultCIPermissions os.FileMode = 0744
 )
 
-// ConfigFile for OpenFaaS CLI exclusively.
+// ConfigFile for Forge4Flow CLI exclusively.
 type ConfigFile struct {
 	AuthConfigs []AuthConfig `yaml:"auths"`
 	FilePath    string       `yaml:"-"`
@@ -86,7 +86,7 @@ func New(filePath string) (*ConfigFile, error) {
 	return conf, nil
 }
 
-// ConfigDir returns the path to the faas-cli config directory.
+// ConfigDir returns the path to the forge-cli config directory.
 // When
 // 1. CI = "true" and OPENFAAS_CONFIG="", then it will return `.openfaas`, which is located in the current working directory.
 // 2. CI = "true" and OPENFAAS_CONFIG="<path>", then it will return the path value in  OPENFAAS_CONFIG

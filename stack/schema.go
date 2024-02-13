@@ -1,5 +1,5 @@
-// Copyright (c) Alex Ellis 2017. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// Copyright (c) Forge4Flow DAO LLC 2024. All rights reserved.
+// Licensed under the MIT license.
 
 package stack
 
@@ -60,19 +60,19 @@ type Function struct {
 	// BuildArgs for providing build-args
 	BuildArgs map[string]string `yaml:"build_args,omitempty"`
 
-	// Platforms for use with buildx and faas-cli publish
+	// Platforms for use with buildx and forge-cli publish
 	Platforms string `yaml:"platforms,omitempty"`
 
 	// BuildSecrets is a set of secrets to mount with buildkit
 	BuildSecrets map[string]string `yaml:"build_secrets,omitempty"`
 }
 
-// Configuration for the stack.yml file
+// Configuration for the functions.yml file
 type Configuration struct {
 	StackConfig StackConfiguration `yaml:"configuration"`
 }
 
-// StackConfiguration for the overall stack.yml
+// StackConfiguration for the overall functions.yml
 type StackConfiguration struct {
 	TemplateConfigs []TemplateSource `yaml:"templates"`
 

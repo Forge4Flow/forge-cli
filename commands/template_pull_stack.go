@@ -6,7 +6,7 @@ import (
 
 	"gopkg.in/yaml.v3"
 
-	"github.com/openfaas/faas-cli/stack"
+	"github.com/forge4flow/forge-cli/stack"
 	"github.com/spf13/cobra"
 )
 
@@ -28,9 +28,9 @@ var templatePullStackCmd = &cobra.Command{
 	Long: `Downloads templates specified in the function yaml file, in the current directory
 	`,
 	Example: `
-  faas-cli template pull stack
-  faas-cli template pull stack -f myfunction.yml
-  faas-cli template pull stack -r custom_repo_name
+  forge-cli template pull stack
+  forge-cli template pull stack -f myfunction.yml
+  forge-cli template pull stack -r custom_repo_name
 `,
 	RunE: runTemplatePullStack,
 }

@@ -5,7 +5,7 @@ import (
 	"regexp"
 	"testing"
 
-	"github.com/openfaas/faas-cli/schema"
+	"github.com/forge4flow/forge-cli/schema"
 	"github.com/openfaas/faas-provider/types"
 )
 

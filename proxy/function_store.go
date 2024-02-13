@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	v2 "github.com/openfaas/faas-cli/schema/store/v2"
+	v2 "github.com/forge4flow/forge-cli/schema/store/v2"
 )
 
 type StoreResult struct {
@@ -30,7 +30,7 @@ func FunctionStoreList(store string) ([]v2.StoreFunction, error) {
 
 	res, err := client.Get(store)
 	if err != nil {
-		return nil, fmt.Errorf("cannot connect to OpenFaaS store at URL: %s", store)
+		return nil, fmt.Errorf("cannot connect to Forge4Flow store at URL: %s", store)
 	}
 
 	if res.Body != nil {
@@ -41,12 +41,12 @@ func FunctionStoreList(store string) ([]v2.StoreFunction, error) {
 	case http.StatusOK:
 		bytesOut, err := io.ReadAll(res.Body)
 		if err != nil {
-			return nil, fmt.Errorf("cannot read result from OpenFaaS store at URL: %s", store)
+			return nil, fmt.Errorf("cannot read result from Forge4Flow store at URL: %s", store)
 		}
 
 		jsonErr := json.Unmarshal(bytesOut, &storeResults)
 		if jsonErr != nil {
-			return nil, fmt.Errorf("cannot parse result from OpenFaaS store at URL: %s\n%s", store, jsonErr.Error())
+			return nil, fmt.Errorf("cannot parse result from Forge4Flow store at URL: %s\n%s", store, jsonErr.Error())
 		}
 	default:
 		bytesOut, err := io.ReadAll(res.Body)

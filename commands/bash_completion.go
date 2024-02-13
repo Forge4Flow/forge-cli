@@ -1,5 +1,5 @@
-// Copyright (c) Alex Ellis 2017. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// Copyright (c) Forge4Flow DAO LLC 2024. All rights reserved.
+// Licensed under the MIT license.
 
 package commands
 
@@ -10,7 +10,7 @@ import (
 )
 
 func init() {
-	faasCmd.AddCommand(bashcompletionCmd)
+	forgeCmd.AddCommand(bashcompletionCmd)
 }
 
 // bashcompletionCmd generates a bash completion file
@@ -32,7 +32,7 @@ func runBashcompletion(cmd *cobra.Command, args []string) error {
 		return fmt.Errorf("please provide filename for bash completion")
 	}
 	fileName := args[0]
-	err := faasCmd.GenBashCompletionFile(fileName)
+	err := forgeCmd.GenBashCompletionFile(fileName)
 	if err != nil {
 		return fmt.Errorf("unable to create bash completion file")
 	}

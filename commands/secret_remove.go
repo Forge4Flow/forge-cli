@@ -1,4 +1,4 @@
-// Copyright (c) OpenFaaS Author(s) 2019. All rights reserved.
+// Copyright (c) Forge4Flow Author(s) 2019. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 package commands
@@ -8,7 +8,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/openfaas/faas-cli/proxy"
+	"github.com/forge4flow/forge-cli/proxy"
 	types "github.com/openfaas/faas-provider/types"
 	"github.com/spf13/cobra"
 )
@@ -18,8 +18,8 @@ var secretRemoveCmd = &cobra.Command{
 	Aliases: []string{"rm"},
 	Short:   "remove a secret",
 	Long:    `Remove a secret by name`,
-	Example: `faas-cli secret remove NAME
-faas-cli secret remove NAME --gateway=http://127.0.0.1:8080`,
+	Example: `forge-cli secret remove NAME
+forge-cli secret remove NAME --gateway=http://127.0.0.1:8080`,
 	RunE:    runSecretRemove,
 	PreRunE: preRunSecretRemoveCmd,
 }

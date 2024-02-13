@@ -1,5 +1,5 @@
-// Copyright (c) Alex Ellis 2017. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// Copyright (c) Forge4Flow DAO LLC 2024. All rights reserved.
+// Licensed under the MIT license.
 
 package commands
 
@@ -8,8 +8,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/openfaas/faas-cli/proxy"
-	"github.com/openfaas/faas-cli/stack"
+	"github.com/forge4flow/forge-cli/proxy"
+	"github.com/forge4flow/forge-cli/stack"
 	"github.com/spf13/cobra"
 )
 
@@ -17,28 +17,28 @@ func init() {
 	// Setup flags that are used by multiple commands (variables defined in faas.go)
 	removeCmd.Flags().StringVarP(&gateway, "gateway", "g", defaultGateway, "Gateway URL starting with http(s)://")
 	removeCmd.Flags().BoolVar(&tlsInsecure, "tls-no-verify", false, "Disable TLS validation")
-	removeCmd.Flags().BoolVar(&envsubst, "envsubst", true, "Substitute environment variables in stack.yml file")
+	removeCmd.Flags().BoolVar(&envsubst, "envsubst", true, "Substitute environment variables in functions.yml file")
 	removeCmd.Flags().StringVarP(&token, "token", "k", "", "Pass a JWT token to use instead of basic auth")
 	removeCmd.Flags().StringVarP(&functionNamespace, "namespace", "n", "", "Namespace of the function")
 
-	faasCmd.AddCommand(removeCmd)
+	forgeCmd.AddCommand(removeCmd)
 }
 
-// removeCmd deletes/removes OpenFaaS function containers
+// removeCmd deletes/removes Forge4Flow function containers
 var removeCmd = &cobra.Command{
 	Use: `remove FUNCTION_NAME [--gateway GATEWAY_URL]
-  faas-cli remove -f YAML_FILE [--regex "REGEX"] [--filter "WILDCARD"]`,
+  forge-cli remove -f YAML_FILE [--regex "REGEX"] [--filter "WILDCARD"]`,
 	Aliases: []string{"rm", "delete"},
-	Short:   "Remove deployed OpenFaaS functions",
-	Long: `Removes/deletes deployed OpenFaaS functions either via the supplied YAML config
+	Short:   "Remove deployed Forge4Flow functions",
+	Long: `Removes/deletes deployed Forge4Flow functions either via the supplied YAML config
 using the "--yaml" flag (which may contain multiple function definitions), or by
 explicitly specifying a function name.`,
-	Example: `  faas-cli remove -f https://domain/path/myfunctions.yml
-  faas-cli remove -f ./stack.yml
-  faas-cli remove -f ./stack.yml --filter "*gif*"
-  faas-cli remove -f ./stack.yml --regex "fn[0-9]_.*"
-  faas-cli remove url-ping
-  faas-cli remove img2ansi --gateway==http://remote-site.com:8080`,
+	Example: `  forge-cli remove -f https://domain/path/myfunctions.yml
+  forge-cli remove -f ./functions.yml
+  forge-cli remove -f ./functions.yml --filter "*gif*"
+  forge-cli remove -f ./functions.yml --regex "fn[0-9]_.*"
+  forge-cli remove url-ping
+  forge-cli remove img2ansi --gateway==http://remote-site.com:8080`,
 	RunE: runDelete,
 }
 

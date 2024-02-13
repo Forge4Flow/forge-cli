@@ -1,5 +1,5 @@
-// Copyright (c) Alex Ellis 2017. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// Copyright (c) Forge4Flow DAO LLC 2024. All rights reserved.
+// Licensed under the MIT license.
 
 package commands
 
@@ -13,7 +13,7 @@ import (
 	"io/ioutil"
 
 	"github.com/alexellis/hmac"
-	"github.com/openfaas/faas-cli/test"
+	"github.com/forge4flow/forge-cli/test"
 )
 
 func Test_invoke(t *testing.T) {
@@ -38,12 +38,12 @@ func Test_invoke(t *testing.T) {
 	}()
 
 	stdOut := test.CaptureStdout(func() {
-		faasCmd.SetArgs([]string{
+		forgeCmd.SetArgs([]string{
 			"invoke",
 			"--gateway=" + s.URL,
 			funcName,
 		})
-		faasCmd.Execute()
+		forgeCmd.Execute()
 	})
 
 	if found, err := regexp.MatchString(`(?m:`+expectedInvokeResponse+`)`, stdOut); err != nil || !found {
@@ -72,13 +72,13 @@ func Test_async_invoke(t *testing.T) {
 	}()
 
 	stdOut := test.CaptureStdout(func() {
-		faasCmd.SetArgs([]string{
+		forgeCmd.SetArgs([]string{
 			"invoke",
 			"--gateway=" + s.URL,
 			"--async",
 			funcName,
 		})
-		faasCmd.Execute()
+		forgeCmd.Execute()
 	})
 
 	if found, err := regexp.MatchString(`(?m:)`, stdOut); err != nil || !found {

@@ -10,10 +10,10 @@ So if you want to write in another language, just prepare a Dockerfile and build
 
 This will generate a Docker image for a Node.js function using the code in `/samples/info`.
 
-* The `faas-cli build` command can accept a `--lang` option of `python`, `node`, `ruby`, `csharp`, `python3`, `go`, or `dockerfile`.
+- The `forge-cli build` command can accept a `--lang` option of `python`, `node`, `ruby`, `csharp`, `python3`, `go`, or `dockerfile`.
 
 ```
-   $ faas-cli build \
+   $ forge-cli build \
       --image=alexellis2/node_info \
       --lang=node \
       --name=node_info \
@@ -33,7 +33,7 @@ For example:
 
 module.exports = (context, callback) => {
     console.log("echo - " + context);
-    
+
     callback(undefined, {status: "done"});
 }
 ```
@@ -45,7 +45,7 @@ The CLI will then build a Docker image containing the FaaS watchdog and a bootst
 Now we can deploy the image as a named function called `node_info`.
 
 ```
-$ faas-cli deploy \
+$ forge-cli deploy \
    --image=alexellis2/node_info \
    --name=node_info
 
@@ -56,6 +56,6 @@ URL: http://127.0.0.1:8080/function/node_info
 
 > This tool can be used to deploy any Docker image as a FaaS function, as long as it includes the watchdog binary as the `CMD` or `ENTRYPOINT` of the image.
 
-*Deploy remotely*
+_Deploy remotely_
 
 You can deploy to a remote FaaS instance as along as you push the image to the Docker Hub, or another accessible Docker registry. Specify your remote gateway with the following flag: `--gateway=http://remote-site.com:8080`

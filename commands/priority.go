@@ -1,5 +1,5 @@
-// Copyright (c) Alex Ellis 2017. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// Copyright (c) Forge4Flow DAO LLC 2024. All rights reserved.
+// Licensed under the MIT license.
 
 package commands
 
@@ -65,7 +65,7 @@ func getNamespace(flagNamespace, stackNamespace string) string {
 	if len(flagNamespace) > 0 {
 		return flagNamespace
 	}
-	// https://github.com/openfaas/faas-cli/issues/742#issuecomment-625746405
+	// https://github.com/forge4flow/forge-cli/issues/742#issuecomment-625746405
 	if len(stackNamespace) > 0 {
 		return stackNamespace
 	}

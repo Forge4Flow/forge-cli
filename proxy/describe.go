@@ -1,4 +1,4 @@
-// Copyright (c) OpenFaaS Author(s) 2018. All rights reserved.
+// Copyright (c) Forge4Flow Author(s) 2018. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 package proxy
@@ -15,7 +15,7 @@ import (
 	types "github.com/openfaas/faas-provider/types"
 )
 
-// GetFunctionInfo get an OpenFaaS function information
+// GetFunctionInfo get an Forge4Flow function information
 func (c *Client) GetFunctionInfo(ctx context.Context, functionName string, namespace string) (types.FunctionStatus, error) {
 	var (
 		result types.FunctionStatus
@@ -50,16 +50,16 @@ func (c *Client) GetFunctionInfo(ctx context.Context, functionName string, names
 	case http.StatusOK:
 		bytesOut, err := io.ReadAll(res.Body)
 		if err != nil {
-			return result, fmt.Errorf("cannot read result from OpenFaaS on URL: %s", c.GatewayURL.String())
+			return result, fmt.Errorf("cannot read result from Forge4Flow on URL: %s", c.GatewayURL.String())
 		}
 
 		if err := json.Unmarshal(bytesOut, &result); err != nil {
-			return result, fmt.Errorf("cannot parse result from OpenFaaS on URL: %s\n%w",
+			return result, fmt.Errorf("cannot parse result from Forge4Flow on URL: %s\n%w",
 				c.GatewayURL.String(), err)
 		}
 
 	case http.StatusUnauthorized:
-		return result, fmt.Errorf("unauthorized access, run \"faas-cli login\" to setup authentication for this server")
+		return result, fmt.Errorf("unauthorized access, run \"forge-cli login\" to setup authentication for this server")
 	case http.StatusNotFound:
 		return result, fmt.Errorf("no such function: %s", functionName)
 	default:

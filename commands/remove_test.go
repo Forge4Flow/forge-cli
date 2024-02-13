@@ -1,5 +1,5 @@
-// Copyright (c) Alex Ellis 2017. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// Copyright (c) Forge4Flow DAO LLC 2024. All rights reserved.
+// Licensed under the MIT license.
 
 package commands
 
@@ -10,7 +10,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/openfaas/faas-cli/test"
+	"github.com/forge4flow/forge-cli/test"
 )
 
 const testStack = `
@@ -54,13 +54,13 @@ func Test_remove(t *testing.T) {
 
 	// run delete with a yaml file and also specify a function to delete.
 	// the explicitly specified function should be preferred over the function from the yaml file.
-	faasCmd.SetArgs([]string{
+	forgeCmd.SetArgs([]string{
 		"remove",
 		"--yaml=" + tmpfile.Name(),
 		"--gateway=" + s.URL,
 		"test-function",
 	})
-	commandOutput := test.CaptureStdout(func() { faasCmd.Execute() })
+	commandOutput := test.CaptureStdout(func() { forgeCmd.Execute() })
 
 	if !strings.Contains(commandOutput, "Deleting: test-function") {
 		t.Error("test-function should be deleted.")

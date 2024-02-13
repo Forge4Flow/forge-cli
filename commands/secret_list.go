@@ -1,4 +1,4 @@
-// Copyright (c) OpenFaaS Author(s) 2019. All rights reserved.
+// Copyright (c) Forge4Flow Author(s) 2019. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 package commands
@@ -10,7 +10,7 @@ import (
 	"os"
 	"text/tabwriter"
 
-	"github.com/openfaas/faas-cli/proxy"
+	"github.com/forge4flow/forge-cli/proxy"
 	types "github.com/openfaas/faas-provider/types"
 	"github.com/spf13/cobra"
 )
@@ -21,8 +21,8 @@ var secretListCmd = &cobra.Command{
 	Aliases: []string{"ls"},
 	Short:   "List all secrets",
 	Long:    `List all secrets`,
-	Example: `faas-cli secret list
-faas-cli secret list --gateway=http://127.0.0.1:8080`,
+	Example: `forge-cli secret list
+forge-cli secret list --gateway=http://127.0.0.1:8080`,
 	RunE:    runSecretList,
 	PreRunE: preRunSecretListCmd,
 }

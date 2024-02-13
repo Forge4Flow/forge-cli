@@ -9,7 +9,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/openfaas/faas-cli/test"
+	"github.com/forge4flow/forge-cli/test"
 	"github.com/openfaas/faas-provider/logs"
 )
 
@@ -96,7 +96,7 @@ func Test_GetLogs_401Unauthorized(t *testing.T) {
 		t.Fatal("Expected error, got: nil")
 	}
 
-	if err.Error() != "unauthorized access, run \"faas-cli login\" to setup authentication for this server" {
+	if err.Error() != "unauthorized access, run \"forge-cli login\" to setup authentication for this server" {
 		t.Fatalf("Expected unauthorized error, got: %#v", err)
 	}
 }

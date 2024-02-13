@@ -1,4 +1,4 @@
-// Copyright (c) OpenFaaS Author(s) 2018. All rights reserved.
+// Copyright (c) Forge4Flow Author(s) 2018. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 package commands
@@ -8,8 +8,8 @@ import (
 	"fmt"
 	"text/tabwriter"
 
+	storeV2 "github.com/forge4flow/forge-cli/schema/store/v2"
 	"github.com/mitchellh/go-wordwrap"
-	storeV2 "github.com/openfaas/faas-cli/schema/store/v2"
 	"github.com/spf13/cobra"
 )
 
@@ -19,9 +19,9 @@ func init() {
 
 var storeDescribeCmd = &cobra.Command{
 	Use:   `describe (FUNCTION_NAME|FUNCTION_TITLE) [--url STORE_URL]`,
-	Short: "Show details of OpenFaaS function from a store",
-	Example: `  faas-cli store describe nodeinfo
-  faas-cli store describe nodeinfo --url https://host:port/store.json
+	Short: "Show details of Forge4Flow function from a store",
+	Example: `  forge-cli store describe nodeinfo
+  forge-cli store describe nodeinfo --url https://host:port/store.json
 `,
 	Aliases: []string{"inspect"},
 	RunE:    runStoreDescribe,

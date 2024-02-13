@@ -1,4 +1,4 @@
-// Copyright (c) OpenFaaS Author(s) 2023. All rights reserved.
+// Copyright (c) Forge4Flow Author(s) 2023. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 package commands
@@ -14,7 +14,7 @@ var namespaceDeleteCmd = &cobra.Command{
 	Use:     `delete NAME`,
 	Short:   "Delete existing namespace",
 	Long:    "Delete existing namespace",
-	Example: `  faas-cli namespace delete NAME`,
+	Example: `  forge-cli namespace delete NAME`,
 	RunE:    deleteNamespace,
 	PreRunE: preDeleteNamespace,
 }

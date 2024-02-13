@@ -1,4 +1,4 @@
-// Copyright (c) OpenFaaS Author(s) 2023. All rights reserved.
+// Copyright (c) Forge4Flow Author(s) 2023. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 package commands
@@ -17,7 +17,7 @@ var namespaceGetCmd = &cobra.Command{
 	Use:     `get NAME`,
 	Short:   "Get existing namespace",
 	Long:    "Get existing namespace",
-	Example: `  faas-cli namespace get NAME`,
+	Example: `  forge-cli namespace get NAME`,
 	RunE:    get_namespace,
 	PreRunE: preGetNamespace,
 }

@@ -12,7 +12,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/openfaas/faas-cli/version"
+	"github.com/forge4flow/forge-cli/version"
 )
 
 // Client an API client to perform all operations
@@ -20,7 +20,7 @@ type Client struct {
 	httpClient *http.Client
 	//ClientAuth a type implementing ClientAuth interface for client authentication
 	ClientAuth ClientAuth
-	//GatewayURL base URL of OpenFaaS gateway
+	//GatewayURL base URL of Forge4Flow gateway
 	GatewayURL *url.URL
 	//UserAgent user agent for the client
 	UserAgent string
@@ -53,7 +53,7 @@ func NewClient(auth ClientAuth, gatewayURL string, transport http.RoundTripper, 
 		ClientAuth: auth,
 		httpClient: client,
 		GatewayURL: baseURL,
-		UserAgent:  fmt.Sprintf("faas-cli/%s", version.BuildVersion()),
+		UserAgent:  fmt.Sprintf("forge-cli/%s", version.BuildVersion()),
 	}, nil
 }
 

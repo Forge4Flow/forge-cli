@@ -1,5 +1,5 @@
-// Copyright (c) Alex Ellis 2017. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// Copyright (c) Forge4Flow DAO LLC 2024. All rights reserved.
+// Licensed under the MIT license.
 package commands
 
 import (
@@ -32,8 +32,8 @@ directory from the root of the repo, if it exists.
 [REPOSITORY_URL] may specify a specific branch or tag to copy by adding a URL fragment with the branch or tag name.
 	`,
 	Example: `
-  faas-cli template pull https://github.com/openfaas/templates
-  faas-cli template pull https://github.com/openfaas/templates#1.0
+  forge-cli template pull https://github.com/openfaas/templates
+  forge-cli template pull https://github.com/openfaas/templates#1.0
 `,
 	RunE: runTemplatePull,
 }

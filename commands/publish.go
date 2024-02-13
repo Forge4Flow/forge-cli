@@ -1,5 +1,5 @@
-// Copyright (c) Alex Ellis 2017. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// Copyright (c) Forge4Flow DAO LLC 2024. All rights reserved.
+// Licensed under the MIT license.
 
 package commands
 
@@ -10,11 +10,11 @@ import (
 	"time"
 
 	v2execute "github.com/alexellis/go-execute/v2"
+	"github.com/forge4flow/forge-cli/util"
 	"github.com/morikuni/aec"
-	"github.com/openfaas/faas-cli/util"
 
-	"github.com/openfaas/faas-cli/builder"
-	"github.com/openfaas/faas-cli/stack"
+	"github.com/forge4flow/forge-cli/builder"
+	"github.com/forge4flow/forge-cli/stack"
 	"github.com/spf13/cobra"
 )
 
@@ -44,9 +44,9 @@ func init() {
 	publishCmd.Flags().Var(&tagFormat, "tag", "Override latest tag on function Docker image, accepts 'latest', 'sha', 'branch', or 'describe'")
 	publishCmd.Flags().StringArrayVar(&buildLabels, "build-label", []string{}, "Add a label for Docker image (LABEL=VALUE)")
 	publishCmd.Flags().StringArrayVar(&copyExtra, "copy-extra", []string{}, "Extra paths that will be copied into the function build context")
-	publishCmd.Flags().BoolVar(&envsubst, "envsubst", true, "Substitute environment variables in stack.yml file")
+	publishCmd.Flags().BoolVar(&envsubst, "envsubst", true, "Substitute environment variables in functions.yml file")
 	publishCmd.Flags().BoolVar(&quietBuild, "quiet", false, "Perform a quiet build, without showing output from Docker")
-	publishCmd.Flags().BoolVar(&disableStackPull, "disable-stack-pull", false, "Disables the template configuration in the stack.yml")
+	publishCmd.Flags().BoolVar(&disableStackPull, "disable-stack-pull", false, "Disables the template configuration in the functions.yml")
 	publishCmd.Flags().StringVar(&platforms, "platforms", "linux/amd64", "A set of platforms to publish")
 	publishCmd.Flags().StringArrayVar(&extraTags, "extra-tag", []string{}, "Additional extra image tag")
 	publishCmd.Flags().BoolVar(&resetQemu, "reset-qemu", false, "Runs \"docker run multiarch/qemu-user-static --reset -p yes\" to enable multi-arch builds. Compatible with AMD64 machines only.")
@@ -56,13 +56,13 @@ func init() {
 	// Set bash-completion.
 	_ = publishCmd.Flags().SetAnnotation("handler", cobra.BashCompSubdirsInDir, []string{})
 
-	faasCmd.AddCommand(publishCmd)
+	forgeCmd.AddCommand(publishCmd)
 }
 
-// publishCmd allows the user to build an OpenFaaS function container
+// publishCmd allows the user to build an Forge4Flow function container
 var publishCmd = &cobra.Command{
 	Use: `publish -f YAML_FILE [--no-cache] [--squash]
-  faas-cli publish --image IMAGE_NAME
+  forge-cli publish --image IMAGE_NAME
                    --handler HANDLER_DIR
                    --name FUNCTION_NAME
                    [--lang LANG]
@@ -77,9 +77,9 @@ var publishCmd = &cobra.Command{
                    [--platforms linux/arm/v7]
                    [--reset-qemu]
                    [--remote-builder http://127.0.0.1:8081/build]`,
-	Short: "Builds and pushes multi-arch OpenFaaS container images",
-	Long: `Builds and pushes multi-arch OpenFaaS container images using Docker buildx.
-Most users will want faas-cli build or faas-cli up for development and testing.
+	Short: "Builds and pushes multi-arch Forge4Flow container images",
+	Long: `Builds and pushes multi-arch Forge4Flow container images using Docker buildx.
+Most users will want forge-cli build or forge-cli up for development and testing.
 This command is designed to make releasing and publishing multi-arch container 
 images easier.
 
@@ -88,14 +88,14 @@ available in the local Docker library. This is due to technical constraints in
 Docker and buildx. You must use a multi-arch template to use this command with 
 correctly configured TARGETPLATFORM and BUILDPLATFORM arguments.
 
-See also: faas-cli build`,
-	Example: `  faas-cli publish --platforms linux/amd64,linux/arm64,linux/arm/7
-  faas-cli publish --platforms linux/arm/7 --filter webhook
-  faas-cli publish -f go.yml --no-cache --build-arg NPM_VERSION=0.2.2
-  faas-cli publish --build-option dev
-  faas-cli publish --tag sha
-  faas-cli publish --reset-qemu
-  faas-cli publish --remote-builder http://127.0.0.1:8081/build
+See also: forge-cli build`,
+	Example: `  forge-cli publish --platforms linux/amd64,linux/arm64,linux/arm/7
+  forge-cli publish --platforms linux/arm/7 --filter webhook
+  forge-cli publish -f go.yml --no-cache --build-arg NPM_VERSION=0.2.2
+  forge-cli publish --build-option dev
+  forge-cli publish --tag sha
+  forge-cli publish --reset-qemu
+  forge-cli publish --remote-builder http://127.0.0.1:8081/build
   `,
 	PreRunE: preRunPublish,
 	RunE:    runPublish,
@@ -140,7 +140,7 @@ func runPublish(cmd *cobra.Command, args []string) error {
 
 	templateAddress := getTemplateURL("", os.Getenv(templateURLEnvironment), DefaultTemplateRepository)
 	if pullErr := pullTemplates(templateAddress); pullErr != nil {
-		return fmt.Errorf("could not pull templates for OpenFaaS: %v", pullErr)
+		return fmt.Errorf("could not pull templates for Forge4Flow: %v", pullErr)
 	}
 
 	if resetQemu {

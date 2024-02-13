@@ -1,4 +1,4 @@
-// Copyright (c) OpenFaaS Author(s) 2018. All rights reserved.
+// Copyright (c) Forge4Flow Author(s) 2018. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 package commands
@@ -22,17 +22,17 @@ var templateStoreDescribeCmd = &cobra.Command{
 	Use:   `describe`,
 	Short: `Describe the template`,
 	Long:  `Describe the template by outputting all the fields that the template struct has`,
-	Example: `  faas-cli template store describe golang-http
-  faas-cli template store describe haskell --url https://raw.githubusercontent.com/custom/store/master/templates.json`,
+	Example: `  forge-cli template store describe golang-http
+  forge-cli template store describe haskell --url https://raw.githubusercontent.com/custom/store/master/templates.json`,
 	RunE: runTemplateStoreDescribe,
 }
 
 func runTemplateStoreDescribe(cmd *cobra.Command, args []string) error {
 	if len(args) == 0 {
-		return fmt.Errorf("\nNeed to specify one of the store templates, check available ones by running the command:\n\nfaas-cli template store list\n")
+		return fmt.Errorf("\nNeed to specify one of the store templates, check available ones by running the command:\n\nforge-cli template store list\n")
 	}
 	if len(args) > 1 {
-		return fmt.Errorf("\nNeed to specify single template from the store, check available ones by running the command:\n\nfaas-cli template store list\n")
+		return fmt.Errorf("\nNeed to specify single template from the store, check available ones by running the command:\n\nforge-cli template store list\n")
 	}
 	envTemplateRepoStore := os.Getenv(templateStoreURLEnvironment)
 	storeURL := getTemplateStoreURL(templateStoreURL, envTemplateRepoStore, DefaultTemplatesStore)

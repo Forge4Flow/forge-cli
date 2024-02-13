@@ -1,5 +1,5 @@
-// Copyright (c) Alex Ellis 2017. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// Copyright (c) Forge4Flow DAO LLC 2024. All rights reserved.
+// Licensed under the MIT license.
 
 package commands
 
@@ -12,13 +12,12 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/openfaas/faas-cli/builder"
-	"github.com/openfaas/faas-cli/stack"
+	"github.com/forge4flow/forge-cli/builder"
+	"github.com/forge4flow/forge-cli/stack"
 	"github.com/spf13/cobra"
 )
 
 var (
-	appendFile    string
 	list          bool
 	quiet         bool
 	memoryLimit   string
@@ -26,6 +25,8 @@ var (
 	memoryRequest string
 	cpuRequest    string
 )
+
+const functionsFileName = "functions.yml"
 
 func init() {
 	newFunctionCmd.Flags().StringVar(&language, "lang", "", "Language or template to use")
@@ -40,23 +41,21 @@ func init() {
 	newFunctionCmd.Flags().StringVar(&cpuRequest, "cpu-request", "", "Set a request value for the CPU")
 
 	newFunctionCmd.Flags().BoolVar(&list, "list", false, "List available languages")
-	newFunctionCmd.Flags().StringVarP(&appendFile, "append", "a", "", "Append to existing YAML file")
 	newFunctionCmd.Flags().BoolVarP(&quiet, "quiet", "q", false, "Skip template notes")
 
-	faasCmd.AddCommand(newFunctionCmd)
+	forgeCmd.AddCommand(newFunctionCmd)
 }
 
 // newFunctionCmd displays newFunction information
 var newFunctionCmd = &cobra.Command{
-	Use:   "new FUNCTION_NAME --lang=FUNCTION_LANGUAGE [--gateway=http://host:port] | --list | --append=STACK_FILE)",
+	Use:   "new FUNCTION_NAME --lang=FUNCTION_LANGUAGE [--gateway=http://host:port] | --list",
 	Short: "Create a new template in the current folder with the name given as name",
 	Long: `The new command creates a new function based upon hello-world in the given
 language or type in --list for a list of languages available.`,
-	Example: `  faas-cli new chatbot --lang node
-  faas-cli new chatbot --lang node --append stack.yml
-  faas-cli new text-parser --lang python --quiet
-  faas-cli new text-parser --lang python --gateway http://mydomain:8080
-  faas-cli new --list`,
+	Example: `  forge-cli new chatbot --lang node
+  forge-cli new text-parser --lang python --quiet
+  forge-cli new text-parser --lang python --gateway http://mydomain:8080
+  forge-cli new --list`,
 	PreRunE: preRunNewFunction,
 	RunE:    runNewFunction,
 }
@@ -74,7 +73,7 @@ func validateFunctionName(functionName string) error {
 
 // preRunNewFunction validates args & flags
 func preRunNewFunction(cmd *cobra.Command, args []string) error {
-	if list == true {
+	if list {
 		return nil
 	}
 
@@ -110,8 +109,8 @@ func runNewFunction(cmd *cobra.Command, args []string) error {
 			return fmt.Errorf(`no language templates were found.
 
 Download templates:
-  faas-cli template pull           download the default templates
-  faas-cli template store list     view the community template store`)
+  forge-cli template pull           download the default templates
+  forge-cli template store list     view the community template store`)
 		}
 
 		for _, file := range templateFolders {
@@ -133,44 +132,18 @@ Download templates:
 	}
 
 	var fileName, outputMsg string
-	appendMode := len(appendFile) > 0
-
-	if appendMode {
-		if (strings.HasSuffix(appendFile, ".yml") || strings.HasSuffix(appendFile, ".yaml")) == false {
-			return fmt.Errorf("when appending to a stack the suffix should be .yml or .yaml")
-		}
-
-		if _, statErr := os.Stat(appendFile); statErr != nil {
-			return fmt.Errorf("unable to find file: %s - %s", appendFile, statErr.Error())
-		}
-
-		var duplicateError error
-		duplicateError = duplicateFunctionName(functionName, appendFile)
-
-		if duplicateError != nil {
-			return duplicateError
-		}
-
-		fileName = appendFile
-		outputMsg = fmt.Sprintf("Stack file updated: %s\n", fileName)
-
-	} else {
-		gateway = getGatewayURL(gateway, defaultGateway, gateway, os.Getenv(openFaaSURLEnvironment))
-		fileName = functionName + ".yml"
-		outputMsg = fmt.Sprintf("Stack file written: %s\n", fileName)
-	}
-
-	if len(handlerDir) == 0 {
-		handlerDir = functionName
-	}
 
 	if _, err := os.Stat(handlerDir); err == nil {
 		return fmt.Errorf("folder: %s already exists", handlerDir)
 	}
 
-	_, err := os.Stat(fileName)
-	if err == nil && appendMode == false {
-		return fmt.Errorf("file: %s already exists", fileName)
+	if _, err := os.Stat(functionsFileName); os.IsNotExist(err) {
+		// If functions.yml doesn't exist, create it
+		fileName = functionsFileName
+		outputMsg = fmt.Sprintf("Stack file written: %s\n", fileName)
+	} else {
+		fileName = functionsFileName
+		outputMsg = fmt.Sprintf("Stack file updated: %s\n", fileName)
 	}
 
 	if err := os.Mkdir(handlerDir, 0700); err != nil {
@@ -233,7 +206,7 @@ Download templates:
 		}
 	}
 
-	yamlContent := prepareYAMLContent(appendMode, gateway, &function)
+	yamlContent := prepareYAMLContent(gateway, &function)
 
 	f, err := os.OpenFile("./"+fileName, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
 	if err != nil {
@@ -271,7 +244,7 @@ func getPrefixValue() string {
 	return prefix
 }
 
-func prepareYAMLContent(appendMode bool, gateway string, function *stack.Function) (yamlContent string) {
+func prepareYAMLContent(gateway string, function *stack.Function) (yamlContent string) {
 
 	yamlContent = `  ` + function.Name + `:
     lang: ` + function.Language + `
@@ -302,15 +275,12 @@ func prepareYAMLContent(appendMode bool, gateway string, function *stack.Functio
 	}
 
 	yamlContent += "\n"
-	if !appendMode {
-
-		yamlContent = `version: ` + defaultSchemaVersion + `
+	yamlContent = `version: ` + defaultSchemaVersion + `
 provider:
-  name: openfaas
+  name: functions4flow
   gateway: ` + gateway + `
 functions:
 ` + yamlContent
-	}
 
 	return yamlContent
 }

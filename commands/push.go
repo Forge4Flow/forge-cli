@@ -1,5 +1,5 @@
-// Copyright (c) Alex Ellis 2017. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// Copyright (c) Forge4Flow DAO LLC 2024. All rights reserved.
+// Licensed under the MIT license.
 
 package commands
 
@@ -9,41 +9,41 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/openfaas/faas-cli/exec"
+	"github.com/forge4flow/forge-cli/exec"
 
+	"github.com/forge4flow/forge-cli/builder"
+	"github.com/forge4flow/forge-cli/schema"
+	"github.com/forge4flow/forge-cli/stack"
 	"github.com/morikuni/aec"
-	"github.com/openfaas/faas-cli/builder"
-	"github.com/openfaas/faas-cli/schema"
-	"github.com/openfaas/faas-cli/stack"
 	"github.com/spf13/cobra"
 )
 
 func init() {
-	faasCmd.AddCommand(pushCmd)
+	forgeCmd.AddCommand(pushCmd)
 
 	pushCmd.Flags().IntVar(&parallel, "parallel", 1, "Push images in parallel to depth specified.")
 	pushCmd.Flags().Var(&tagFormat, "tag", "Override latest tag on function Docker image, accepts 'digest', 'latest', 'sha', 'branch', 'describe'")
-	pushCmd.Flags().BoolVar(&envsubst, "envsubst", true, "Substitute environment variables in stack.yml file")
+	pushCmd.Flags().BoolVar(&envsubst, "envsubst", true, "Substitute environment variables in functions.yml file")
 	pushCmd.Flags().BoolVar(&quietBuild, "quiet", false, "Perform a quiet build, without showing output from Docker")
 }
 
 // pushCmd handles pushing function container images to a remote repo
 var pushCmd = &cobra.Command{
 	Use:   `push -f YAML_FILE [--regex "REGEX"] [--filter "WILDCARD"] [--parallel] [--tag <sha|branch>]`,
-	Short: "Push OpenFaaS functions to remote registry (Docker Hub)",
-	Long: `Pushes the OpenFaaS function container image(s) defined in the supplied YAML
+	Short: "Push Forge4Flow functions to remote registry (Docker Hub)",
+	Long: `Pushes the Forge4Flow function container image(s) defined in the supplied YAML
 config to a remote repository.
 
 These container images must already be present in your local image cache.`,
 
-	Example: `  faas-cli push -f https://domain/path/myfunctions.yml
-  faas-cli push -f ./stack.yml
-  faas-cli push -f ./stack.yml --parallel 4
-  faas-cli push -f ./stack.yml --filter "*gif*"
-  faas-cli push -f ./stack.yml --regex "fn[0-9]_.*"
-  faas-cli push -f ./stack.yml --tag sha
-  faas-cli push -f ./stack.yml --tag branch
-  faas-cli push -f ./stack.yml --tag describe`,
+	Example: `  forge-cli push -f https://domain/path/myfunctions.yml
+  forge-cli push -f ./functions.yml
+  forge-cli push -f ./functions.yml --parallel 4
+  forge-cli push -f ./functions.yml --filter "*gif*"
+  forge-cli push -f ./functions.yml --regex "fn[0-9]_.*"
+  forge-cli push -f ./functions.yml --tag sha
+  forge-cli push -f ./functions.yml --tag branch
+  forge-cli push -f ./functions.yml --tag describe`,
 	RunE: runPush,
 }
 

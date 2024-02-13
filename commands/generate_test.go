@@ -1,15 +1,15 @@
-// Copyright (c) OpenFaaS Author(s) 2018. All rights reserved.
+// Copyright (c) Forge4Flow Author(s) 2018. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 package commands
 
 import (
 	"testing"
 
-	v2 "github.com/openfaas/faas-cli/schema/store/v2"
+	v2 "github.com/forge4flow/forge-cli/schema/store/v2"
 
-	"github.com/openfaas/faas-cli/schema"
+	"github.com/forge4flow/forge-cli/schema"
 
-	"github.com/openfaas/faas-cli/stack"
+	"github.com/forge4flow/forge-cli/stack"
 )
 
 var generateTestcases = []struct {
@@ -26,7 +26,7 @@ var generateTestcases = []struct {
 		Name: "Specified Namespace and API Version",
 		Input: `
 provider:
-  name: openfaas
+  name: functions4flow
   gateway: http://127.0.0.1:8080
   network: "func_functions"      
 functions:
@@ -35,18 +35,18 @@ functions:
    handler: ./sample/url-ping
    image: alexellis/faas-url-ping:0.2`,
 		Output: []string{`---
-apiVersion: openfaas.com/v1
+apiVersion: forge4flow.com/v1
 kind: Function
 metadata:
   name: url-ping
-  namespace: openfaas-fn
+  namespace: functions4flow
 spec:
   name: url-ping
   image: alexellis/faas-url-ping:0.2
 `},
 		Format:     schema.DefaultFormat,
-		APIVersion: "openfaas.com/v1",
-		Namespace:  "openfaas-fn",
+		APIVersion: "forge4flow.com/v1",
+		Namespace:  "functions4flow",
 		Branch:     "",
 		Version:    "",
 	},
@@ -65,11 +65,11 @@ functions:
      com.scale.zero: 1
 `,
 		Output: []string{`---
-apiVersion: openfaas.com/v1
+apiVersion: forge4flow.com/v1
 kind: Function
 metadata:
   name: url-ping
-  namespace: openfaas-fn
+  namespace: functions4flow
 spec:
   name: url-ping
   image: alexellis/faas-url-ping:0.2
@@ -77,8 +77,8 @@ spec:
     com.scale.zero: "1"
 `},
 		Format:     schema.DefaultFormat,
-		APIVersion: "openfaas.com/v1",
-		Namespace:  "openfaas-fn",
+		APIVersion: "forge4flow.com/v1",
+		Namespace:  "functions4flow",
 		Branch:     "",
 		Version:    "",
 	},
@@ -95,7 +95,7 @@ functions:
   handler: ./sample/url-ping
   image: alexellis/faas-url-ping:0.2`,
 		Output: []string{`---
-apiVersion: openfaas.com/v1
+apiVersion: forge4flow.com/v1
 kind: Function
 metadata:
   name: url-ping
@@ -104,7 +104,7 @@ spec:
   image: alexellis/faas-url-ping:0.2
 `},
 		Format:     schema.DefaultFormat,
-		APIVersion: "openfaas.com/v1",
+		APIVersion: "forge4flow.com/v1",
 		Namespace:  "",
 		Branch:     "",
 		Version:    "",
@@ -122,18 +122,18 @@ functions:
   handler: ./sample/url-ping
   image: alexellis/faas-url-ping:0.2`,
 		Output: []string{`---
-apiVersion: openfaas.com/v1
+apiVersion: forge4flow.com/v1
 kind: Function
 metadata:
   name: url-ping
-  namespace: openfaas-function
+  namespace: functions4flow
 spec:
   name: url-ping
   image: alexellis/faas-url-ping:0.2-master-6bgf36qd
 `},
 		Format:     schema.BranchAndSHAFormat,
-		APIVersion: "openfaas.com/v1",
-		Namespace:  "openfaas-function",
+		APIVersion: "forge4flow.com/v1",
+		Namespace:  "functions4flow",
 		Branch:     "master",
 		Version:    "6bgf36qd",
 	},
@@ -160,7 +160,7 @@ apiVersion: openfaas.com/v2alpha2
 kind: Function
 metadata:
   name: url-ping
-  namespace: openfaas-fn
+  namespace: functions4flow
 spec:
   name: url-ping
   image: alexellis/faas-url-ping:0.2
@@ -169,7 +169,7 @@ apiVersion: openfaas.com/v2alpha2
 kind: Function
 metadata:
   name: astronaut-finder
-  namespace: openfaas-fn
+  namespace: functions4flow
 spec:
   name: astronaut-finder
   image: astronaut-finder:latest
@@ -180,7 +180,7 @@ apiVersion: openfaas.com/v2alpha2
 kind: Function
 metadata:
   name: astronaut-finder
-  namespace: openfaas-fn
+  namespace: functions4flow
 spec:
   name: astronaut-finder
   image: astronaut-finder:latest
@@ -191,14 +191,14 @@ apiVersion: openfaas.com/v2alpha2
 kind: Function
 metadata:
   name: url-ping
-  namespace: openfaas-fn
+  namespace: functions4flow
 spec:
   name: url-ping
   image: alexellis/faas-url-ping:0.2
 `},
 		Format:     schema.DefaultFormat,
 		APIVersion: "openfaas.com/v2alpha2",
-		Namespace:  "openfaas-fn",
+		Namespace:  "functions4flow",
 		Branch:     "",
 		Version:    "",
 	},
@@ -215,19 +215,19 @@ functions:
   image: alexellis/faas-url-ping:0.2
   readonly_root_filesystem: true`,
 		Output: []string{`---
-apiVersion: openfaas.com/v1
+apiVersion: forge4flow.com/v1
 kind: Function
 metadata:
   name: url-ping
-  namespace: openfaas-fn
+  namespace: functions4flow
 spec:
   name: url-ping
   image: alexellis/faas-url-ping:0.2
   readOnlyRootFilesystem: true
 `},
 		Format:     schema.DefaultFormat,
-		APIVersion: "openfaas.com/v1",
-		Namespace:  "openfaas-fn",
+		APIVersion: "forge4flow.com/v1",
+		Namespace:  "functions4flow",
 		Branch:     "",
 		Version:    "",
 	},

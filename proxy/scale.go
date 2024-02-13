@@ -32,12 +32,12 @@ func (c *Client) ScaleFunction(ctx context.Context, functionName, namespace stri
 
 	req, err := c.newRequest(http.MethodPost, functionPath, query, bodyReader)
 	if err != nil {
-		return fmt.Errorf("cannot connect to OpenFaaS on URL: %s", c.GatewayURL.String())
+		return fmt.Errorf("cannot connect to Forge4Flow on URL: %s", c.GatewayURL.String())
 	}
 
 	res, err := c.doRequest(ctx, req)
 	if err != nil {
-		return fmt.Errorf("cannot connect to OpenFaaS on URL: %s", c.GatewayURL.String())
+		return fmt.Errorf("cannot connect to Forge4Flow on URL: %s", c.GatewayURL.String())
 
 	}
 

@@ -6,8 +6,8 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/openfaas/faas-cli/builder"
-	"github.com/openfaas/faas-cli/stack"
+	"github.com/forge4flow/forge-cli/builder"
+	"github.com/forge4flow/forge-cli/stack"
 )
 
 func Test_findTemplate(t *testing.T) {

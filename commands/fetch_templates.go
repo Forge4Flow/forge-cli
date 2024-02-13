@@ -1,5 +1,5 @@
-// Copyright (c) Alex Ellis 2017. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// Copyright (c) Forge4Flow DAO LLC 2024. All rights reserved.
+// Licensed under the MIT license.
 
 package commands
 
@@ -10,8 +10,8 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/openfaas/faas-cli/builder"
-	"github.com/openfaas/faas-cli/versioncontrol"
+	"github.com/forge4flow/forge-cli/builder"
+	"github.com/forge4flow/forge-cli/versioncontrol"
 )
 
 // DefaultTemplateRepository contains the Git repo for the official templates

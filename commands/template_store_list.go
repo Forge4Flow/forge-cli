@@ -1,4 +1,4 @@
-// Copyright (c) OpenFaaS Author(s) 2018. All rights reserved.
+// Copyright (c) Forge4Flow Author(s) 2018. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 package commands
@@ -46,29 +46,29 @@ func init() {
 // templateStoreListCmd lists templates from default store or custom store if set
 var templateStoreListCmd = &cobra.Command{
 	Use:     `list`,
-	Short:   `List templates from OpenFaaS organizations`,
+	Short:   `List templates from Forge4Flow organizations`,
 	Aliases: []string{"ls"},
 	Long: `List templates from a template store manifest file, by default the 
-official list maintained by the OpenFaaS community is used. You can override this.`,
-	Example: `  faas-cli template store list
+official list maintained by the Forge4Flow community is used. You can override this.`,
+	Example: `  forge-cli template store list
   # List only recommended templates
-  faas-cli template store list --recommended
+  forge-cli template store list --recommended
 
   # List only official templates
-  faas-cli template store list --official
+  forge-cli template store list --official
 
   # Override the store via a flag
-  faas-cli template store ls \
+  forge-cli template store ls \
   --url=https://raw.githubusercontent.com/openfaas/store/master/templates.json
 
   # Specify an alternative store via environment variable
   export OPENFAAS_TEMPLATE_STORE_URL=https://example.com/templates.json
 
   # See additional language and platform
-  faas-cli template store ls --verbose=true
+  forge-cli template store ls --verbose=true
 
   # Filter by platform for arm64 only
-  faas-cli template store list --platform arm64 
+  forge-cli template store list --platform arm64 
 `,
 	RunE: runTemplateStoreList,
 }

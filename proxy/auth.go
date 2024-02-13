@@ -3,7 +3,7 @@ package proxy
 import (
 	"net/http"
 
-	"github.com/openfaas/faas-cli/config"
+	"github.com/forge4flow/forge-cli/config"
 )
 
 // CLIAuth auth struct for the CLI

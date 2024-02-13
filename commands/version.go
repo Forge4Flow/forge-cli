@@ -1,5 +1,5 @@
-// Copyright (c) Alex Ellis 2017. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// Copyright (c) Forge4Flow DAO LLC 2024. All rights reserved.
+// Licensed under the MIT license.
 
 package commands
 
@@ -12,10 +12,10 @@ import (
 	"os"
 
 	"github.com/alexellis/arkade/pkg/get"
+	"github.com/forge4flow/forge-cli/proxy"
+	"github.com/forge4flow/forge-cli/stack"
+	"github.com/forge4flow/forge-cli/version"
 	"github.com/morikuni/aec"
-	"github.com/openfaas/faas-cli/proxy"
-	"github.com/openfaas/faas-cli/stack"
-	"github.com/openfaas/faas-cli/version"
 	"github.com/spf13/cobra"
 )
 
@@ -29,12 +29,12 @@ func init() {
 	versionCmd.Flags().BoolVar(&shortVersion, "short-version", false, "Just print Git SHA")
 	versionCmd.Flags().StringVarP(&gateway, "gateway", "g", defaultGateway, "Gateway URL starting with http(s)://")
 	versionCmd.Flags().BoolVar(&tlsInsecure, "tls-no-verify", false, "Disable TLS validation")
-	versionCmd.Flags().BoolVar(&envsubst, "envsubst", true, "Substitute environment variables in stack.yml file")
+	versionCmd.Flags().BoolVar(&envsubst, "envsubst", true, "Substitute environment variables in functions.yml file")
 
 	versionCmd.Flags().BoolVar(&warnUpdate, "warn-update", true, "Check for new version and warn about updating")
 
 	versionCmd.Flags().StringVarP(&token, "token", "k", "", "Pass a JWT token to use instead of basic auth")
-	faasCmd.AddCommand(versionCmd)
+	forgeCmd.AddCommand(versionCmd)
 }
 
 // versionCmd displays version information
@@ -44,9 +44,9 @@ var versionCmd = &cobra.Command{
 	Long: fmt.Sprintf(`The version command returns the current clients version information.
 
 This currently consists of the GitSHA from which the client was built.
-- https://github.com/openfaas/faas-cli/tree/%s`, version.GitCommit),
-	Example: `  faas-cli version
-  faas-cli version --short-version`,
+- https://github.com/forge4flow/forge-cli/tree/%s`, version.GitCommit),
+	Example: `  forge-cli version
+  forge-cli version --short-version`,
 	RunE: runVersionE,
 }
 
@@ -65,13 +65,13 @@ func runVersionE(cmd *cobra.Command, args []string) error {
 
 	if warnUpdate {
 		version := version.Version
-		latest, err := get.FindGitHubRelease("openfaas", "faas-cli")
+		latest, err := get.FindGitHubRelease("openfaas", "forge-cli")
 		if err != nil {
 			return fmt.Errorf("unable to find latest version online error: %s", err.Error())
 		}
 
 		if version != "" && version != latest {
-			fmt.Printf("Your faas-cli version (%s) may be out of date. Version: %s is now available on GitHub.\n", version, latest)
+			fmt.Printf("Your forge-cli version (%s) may be out of date. Version: %s is now available on GitHub.\n", version, latest)
 		}
 	}
 
@@ -137,18 +137,20 @@ Gateway
 
 // printLogo prints an ASCII logo, which was generated with figlet
 func printLogo() {
-	figletColoured := aec.BlueF.Apply(figletStr)
+	figletColoured := aec.GreenF.Apply(figletStr)
 	if runtime.GOOS == "windows" {
 		figletColoured = aec.GreenF.Apply(figletStr)
 	}
 	fmt.Printf(figletColoured)
 }
 
-const figletStr = `  ___                   _____           ____
- / _ \ _ __   ___ _ __ |  ___|_ _  __ _/ ___|
-| | | | '_ \ / _ \ '_ \| |_ / _` + "`" + ` |/ _` + "`" + ` \___ \
-| |_| | |_) |  __/ | | |  _| (_| | (_| |___) |
- \___/| .__/ \___|_| |_|_|  \__,_|\__,_|____/
-      |_|
+const figletStr = `______                      ___ ______ _               
+|  ___|                    /   ||  ___| |              
+| |_ ___  _ __ __ _  ___  / /| || |_  | | _____      __
+|  _/ _ \| '__/ _  |/ _ \/ /_| ||  _| | |/ _ \ \ /\ / /
+| || (_) | | | (_| |  __/\___  || |   | | (_) \ V  V / 
+\_| \___/|_|  \__, |\___|    |_/\_|   |_|\___/ \_/\_/  
+               __/ |                                   
+              |___/                                    
 
 `

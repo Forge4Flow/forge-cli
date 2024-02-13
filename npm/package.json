@@ -1,11 +1,11 @@
 {
-  "name": "@openfaas/faas-cli",
+  "name": "@forge4flow/forge-cli",
   "version": "0.13.5-1",
-  "description": "OpenFaaS CLI",
+  "description": "Forge4Flow CLI",
   "main": "index.js",
   "bin": {
     "faas": "./cli.js",
-    "faas-cli": "./cli.js"
+    "forge-cli": "./cli.js"
   },
   "scripts": {
     "test": "mocha \"./test.js\"",
@@ -14,18 +14,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/openfaas/faas-cli.git"
+    "url": "git+https://github.com/forge4flow/forge-cli.git"
   },
   "keywords": [
     "openfaas",
     "serverless"
   ],
-  "author": "OpenFaaS Ltd",
+  "author": "Forge4Flow Ltd",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/openfaas/faas-cli/issues"
+    "url": "https://github.com/forge4flow/forge-cli/issues"
   },
-  "homepage": "https://github.com/openfaas/faas-cli#readme",
+  "homepage": "https://github.com/forge4flow/forge-cli#readme",
   "dependencies": {
     "axios": ">=0.21.1",
     "delete": "^1.1.0",

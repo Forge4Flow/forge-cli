@@ -1,4 +1,4 @@
-module github.com/openfaas/faas-cli
+module github.com/forge4flow/forge-cli
 
 go 1.20
 

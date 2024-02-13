@@ -13,9 +13,9 @@ import (
 	"os/exec"
 	"os/signal"
 
-	"github.com/openfaas/faas-cli/builder"
-	"github.com/openfaas/faas-cli/schema"
-	"github.com/openfaas/faas-cli/stack"
+	"github.com/forge4flow/forge-cli/builder"
+	"github.com/forge4flow/forge-cli/schema"
+	"github.com/forge4flow/forge-cli/stack"
 	"github.com/spf13/cobra"
 	"golang.org/x/sync/errgroup"
 )
@@ -23,7 +23,7 @@ import (
 const localSecretsDir = ".secrets"
 
 func init() {
-	faasCmd.AddCommand(newLocalRunCmd())
+	forgeCmd.AddCommand(newLocalRunCmd())
 }
 
 type runOptions struct {
@@ -43,23 +43,23 @@ func newLocalRunCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   `local-run NAME --port PORT -f YAML_FILE [flags from build]`,
 		Short: "Start a function with docker for local testing (experimental feature)",
-		Long: `Providing faas-cli build has already been run, this command will use the 
+		Long: `Providing forge-cli build has already been run, this command will use the 
 docker command to start a container on your local machine using its image.
 
 The function will be bound to the port specified by the --port flag, or 8080
 by default.
 
 There is limited support for secrets, and the function cannot contact other 
-services deployed within your OpenFaaS cluster.`,
+services deployed within your Forge4Flow cluster.`,
 		Example: `
   # Run a function locally
-  faas-cli local-run stronghash
+  forge-cli local-run stronghash
 
   # Run on a custom port
-  faas-cli local-run stronghash --port 8081
+  forge-cli local-run stronghash --port 8081
 
-  # Use a custom YAML file other than stack.yml
-  faas-cli local-run stronghash -f ./stronghash.yml
+  # Use a custom YAML file other than functions.yml
+  forge-cli local-run stronghash -f ./stronghash.yml
 		`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			if len(args) > 1 {
@@ -84,7 +84,7 @@ services deployed within your OpenFaaS cluster.`,
 	cmd.Flags().StringToStringVarP(&opts.extraEnv, "env", "e", map[string]string{}, "additional environment variables (ENVVAR=VALUE), use this to experiment with different values for your function")
 	cmd.Flags().BoolVar(&watch, "watch", false, "Watch for changes in files and re-deploy")
 
-	build, _, _ := faasCmd.Find([]string{"build"})
+	build, _, _ := forgeCmd.Find([]string{"build"})
 	cmd.Flags().AddFlagSet(build.Flags())
 
 	return cmd
@@ -128,7 +128,7 @@ func localRunExec(cmd *cobra.Command, args []string, ctx context.Context) error 
 }
 
 // AE: I found that the `localrun` command will do a build of all functions in
-// the stack.yml if no argument is given and there is > 1 function in
+// the functions.yml if no argument is given and there is > 1 function in
 // the file, then it will exit with an error when it comes to the run step
 func localBuild(cmd *cobra.Command, args []string) error {
 	if err := preRunBuild(cmd, args); err != nil {

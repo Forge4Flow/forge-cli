@@ -8,7 +8,7 @@ import (
 
 func init() {
 
-	faasCmd.AddCommand(pluginCmd)
+	forgeCmd.AddCommand(pluginCmd)
 }
 
 var pluginCmd = &cobra.Command{

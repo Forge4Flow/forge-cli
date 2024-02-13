@@ -1,4 +1,4 @@
-// Copyright (c) OpenFaaS Author(s) 2023. All rights reserved.
+// Copyright (c) Forge4Flow Author(s) 2023. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 package commands
@@ -13,12 +13,12 @@ func init() {
 	namespaceCmd.PersistentFlags().BoolVar(&tlsInsecure, "tls-no-verify", false, "Disable TLS validation")
 	namespaceCmd.PersistentFlags().StringVarP(&token, "token", "k", "", "Pass a JWT token to use instead of basic auth")
 
-	faasCmd.AddCommand(namespaceCmd)
+	forgeCmd.AddCommand(namespaceCmd)
 }
 
 var namespaceCmd = &cobra.Command{
 	Use:     `namespace [--gateway GATEWAY_URL] [--tls-no-verify] [--token JWT_TOKEN]`,
 	Aliases: []string{"ns"},
-	Short:   "Manage OpenFaaS namespaces",
-	Long:    "Query, create, update, and delete OpenFaaS namespaces",
+	Short:   "Manage Forge4Flow namespaces",
+	Long:    "Query, create, update, and delete Forge4Flow namespaces",
 }

@@ -1,5 +1,5 @@
-// Copyright (c) Alex Ellis 2017. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// Copyright (c) Forge4Flow DAO LLC 2024. All rights reserved.
+// Licensed under the MIT license.
 
 package stack
 
@@ -18,8 +18,7 @@ import (
 	yaml "gopkg.in/yaml.v3"
 )
 
-const legacyProviderName = "faas"
-const providerName = "openfaas"
+const providerName = "functions4flow"
 const defaultSchemaVersion = "1.0"
 
 // ValidSchemaVersions available schema versions
@@ -95,7 +94,7 @@ func ParseYAMLData(fileData []byte, regex string, filter string, envsubst bool) 
 	}
 
 	if services.Provider.Name != providerName {
-		return nil, fmt.Errorf(`['%s'] is the only valid "provider.name" for the OpenFaaS CLI, but you gave: %s`, providerName, services.Provider.Name)
+		return nil, fmt.Errorf(`['%s'] is the only valid "provider.name" for the Forge4Flow CLI, but you gave: %s`, providerName, services.Provider.Name)
 	}
 
 	if len(services.Version) > 0 && !IsValidSchemaVersion(services.Version) {
@@ -153,7 +152,7 @@ func makeHTTPClient(timeout *time.Duration) http.Client {
 		}
 	}
 
-	// This should be used for faas-cli invoke etc.
+	// This should be used for forge-cli invoke etc.
 	return http.Client{}
 }
 

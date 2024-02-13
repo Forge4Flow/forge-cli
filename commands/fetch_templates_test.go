@@ -1,5 +1,5 @@
-// Copyright (c) Alex Ellis 2017. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// Copyright (c) Forge4Flow DAO LLC 2024. All rights reserved.
+// Licensed under the MIT license.
 package commands
 
 import (
@@ -12,8 +12,8 @@ import (
 	"github.com/Masterminds/semver"
 	v2execute "github.com/alexellis/go-execute/v2"
 
-	"github.com/openfaas/faas-cli/builder"
-	"github.com/openfaas/faas-cli/versioncontrol"
+	"github.com/forge4flow/forge-cli/builder"
+	"github.com/forge4flow/forge-cli/versioncontrol"
 )
 
 func Test_PullTemplates(t *testing.T) {
@@ -48,7 +48,7 @@ func Test_PullTemplates(t *testing.T) {
 	})
 }
 
-// setupLocalTemplateRepo will create a local copy of the core OpenFaaS templates, this
+// setupLocalTemplateRepo will create a local copy of the core Forge4Flow templates, this
 // can be refered to as a local git repository.
 func setupLocalTemplateRepo(t *testing.T) string {
 	dir, err := os.MkdirTemp("", "openfaas-templates-test-*")

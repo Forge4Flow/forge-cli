@@ -1,12 +1,12 @@
 **/node_modules/
 build
-!contrib/bash/faas-cli
-faas-cli
-faas-cli-darwin
-faas-cli-darwin-arm64
-faas-cli-armhf
-faas-cli.exe
-faas-cli-arm64
+!contrib/bash/forge-cli
+forge-cli
+forge-cli-darwin
+forge-cli-darwin-arm64
+forge-cli-armhf
+forge-cli.exe
+forge-cli-arm64
 
 *.jpg
 *.pyc

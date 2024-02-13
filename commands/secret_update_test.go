@@ -1,4 +1,4 @@
-// Copyright (c) OpenFaaS Author(s) 2019. All rights reserved.
+// Copyright (c) Forge4Flow Author(s) 2019. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 package commands
@@ -11,7 +11,7 @@ import (
 
 	"io/ioutil"
 
-	"github.com/openfaas/faas-cli/test"
+	"github.com/forge4flow/forge-cli/test"
 )
 
 func Test_preRunSecretUpdate_NoArgs_Fails(t *testing.T) {
@@ -65,13 +65,13 @@ func Test_SecretUpdateFromStdin(t *testing.T) {
 	}()
 
 	stdOut := test.CaptureStdout(func() {
-		faasCmd.SetArgs([]string{
+		forgeCmd.SetArgs([]string{
 			"secret",
 			"update",
 			"--gateway=" + s.URL,
 			secretName,
 		})
-		faasCmd.Execute()
+		forgeCmd.Execute()
 	})
 
 	if found, err := regexp.MatchString(`(?m:`+secretName+`)`, stdOut); err != nil || !found {
@@ -92,14 +92,14 @@ func Test_SecretUpdateFromLiteral(t *testing.T) {
 	defer s.Close()
 
 	stdOut := test.CaptureStdout(func() {
-		faasCmd.SetArgs([]string{
+		forgeCmd.SetArgs([]string{
 			"secret",
 			"update",
 			"--gateway=" + s.URL,
 			secretName,
 			`--from-literal="update-me"`,
 		})
-		faasCmd.Execute()
+		forgeCmd.Execute()
 	})
 
 	if found, err := regexp.MatchString(`(?m:`+secretName+`)`, stdOut); err != nil || !found {

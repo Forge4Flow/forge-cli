@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"testing"
 
-	storeV2 "github.com/openfaas/faas-cli/schema/store/v2"
+	storeV2 "github.com/forge4flow/forge-cli/schema/store/v2"
 )
 
 func matchFilteredOutout(t *testing.T, expectedOuputFunctions, filteredFunctions []storeV2.StoreFunction, platform string) {

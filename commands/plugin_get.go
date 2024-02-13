@@ -25,19 +25,19 @@ func init() {
 	pluginGetCmd := &cobra.Command{
 		Use:   "get",
 		Short: "Get a plugin",
-		Long: `Download and extract a plugin for faas-cli from a container
+		Long: `Download and extract a plugin for forge-cli from a container
 registry`,
 		Example: `# Download a plugin by name:
-faas-cli plugin get NAME
+forge-cli plugin get NAME
 
 # Give a version
-faas-cli plugin get NAME --version 0.0.1
+forge-cli plugin get NAME --version 0.0.1
 
 # Give an explicit OS and architecture
-faas-cli plugin get NAME --arch armhf --os linux
+forge-cli plugin get NAME --arch armhf --os linux
 
 # Use a custom registry
-faas-cli plugin get NAME --registry ghcr.io/openfaasltd`,
+forge-cli plugin get NAME --registry ghcr.io/openfaasltd`,
 		RunE: runPluginGetCmd,
 	}
 
@@ -132,7 +132,18 @@ func runPluginGetCmd(cmd *cobra.Command, args []string) error {
 	if err := archive.Untar(tarFile, pluginDir, gzipped, true); err != nil {
 		return fmt.Errorf("failed to untar %s: %w", tmpTar, err)
 	}
-	fmt.Printf("Downloaded in (%ds)\n\nUsage:\n  faas-cli %s\n", int(time.Since(st).Seconds()), pluginName)
+
+	// Add the .exe filename extension to the plugin executable on windows.
+	// If the .exe extension is missing the plugin will not execute.
+	if runtime.GOOS == "windows" {
+		pluginPath := path.Join(pluginDir, pluginName)
+		err := os.Rename(pluginPath, fmt.Sprintf("%s.exe", pluginPath))
+		if err != nil {
+			return fmt.Errorf("failed to move plugin %w", err)
+		}
+	}
+
+	fmt.Printf("Downloaded in (%ds)\n\nUsage:\n  forge-cli %s\n", int(time.Since(st).Seconds()), pluginName)
 	return nil
 }
 

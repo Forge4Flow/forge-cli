@@ -1,4 +1,4 @@
-// Copyright (c) OpenFaaS Author(s) 2019. All rights reserved.
+// Copyright (c) Forge4Flow Author(s) 2019. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 package commands
@@ -10,7 +10,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/openfaas/faas-cli/proxy"
+	"github.com/forge4flow/forge-cli/proxy"
 	types "github.com/openfaas/faas-provider/types"
 	"github.com/spf13/cobra"
 )
@@ -20,12 +20,12 @@ var secretUpdateCmd = &cobra.Command{
 	Aliases: []string{"u"},
 	Short:   "Update a secret",
 	Long:    `Update a secret by name`,
-	Example: `faas-cli secret update NAME
-faas-cli secret update NAME --from-literal=secret-value
-faas-cli secret update NAME --from-file=/path/to/secret/file
-faas-cli secret update NAME --from-file=/path/to/secret/file --trim=false
-faas-cli secret update NAME --from-literal=secret-value --gateway=http://127.0.0.1:8080
-cat /path/to/secret/file | faas-cli secret update NAME`,
+	Example: `forge-cli secret update NAME
+forge-cli secret update NAME --from-literal=secret-value
+forge-cli secret update NAME --from-file=/path/to/secret/file
+forge-cli secret update NAME --from-file=/path/to/secret/file --trim=false
+forge-cli secret update NAME --from-literal=secret-value --gateway=http://127.0.0.1:8080
+cat /path/to/secret/file | forge-cli secret update NAME`,
 	RunE:    runSecretUpdate,
 	PreRunE: preRunSecretUpdate,
 }

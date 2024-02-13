@@ -21,7 +21,7 @@ func (c *Client) GetLogs(ctx context.Context, params logs.Request) (<-chan logs.
 
 	logRequest, err := c.newRequest(http.MethodGet, "/system/logs", url.Values{}, nil)
 	if err != nil {
-		return nil, fmt.Errorf("cannot connect to OpenFaaS on URL: %s", c.GatewayURL.String())
+		return nil, fmt.Errorf("cannot connect to Forge4Flow on URL: %s", c.GatewayURL.String())
 	}
 
 	logRequest.URL.RawQuery = reqAsQueryValues(params).Encode()
@@ -32,7 +32,7 @@ func (c *Client) GetLogs(ctx context.Context, params logs.Request) (<-chan logs.
 
 	res, err := c.doRequest(ctx, logRequest)
 	if err != nil {
-		return nil, fmt.Errorf("cannot connect to OpenFaaS on URL: %s", c.GatewayURL.String())
+		return nil, fmt.Errorf("cannot connect to Forge4Flow on URL: %s", c.GatewayURL.String())
 	}
 
 	logStream := make(chan logs.Message, 1000)
@@ -54,7 +54,7 @@ func (c *Client) GetLogs(ctx context.Context, params logs.Request) (<-chan logs.
 			}
 		}()
 	case http.StatusUnauthorized:
-		return nil, fmt.Errorf("unauthorized access, run \"faas-cli login\" to setup authentication for this server")
+		return nil, fmt.Errorf("unauthorized access, run \"forge-cli login\" to setup authentication for this server")
 	default:
 		bytesOut, err := io.ReadAll(res.Body)
 		if err == nil {

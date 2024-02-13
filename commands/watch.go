@@ -13,13 +13,13 @@ import (
 	"time"
 
 	"github.com/bep/debounce"
+	"github.com/forge4flow/forge-cli/stack"
 	"github.com/fsnotify/fsnotify"
 	"github.com/go-git/go-git/v5/plumbing/format/gitignore"
-	"github.com/openfaas/faas-cli/stack"
 	"github.com/spf13/cobra"
 )
 
-// watchLoop will watch for changes to function handler files and the stack.yml
+// watchLoop will watch for changes to function handler files and the functions.yml
 // then call onChange when a change is detected
 func watchLoop(cmd *cobra.Command, args []string, onChange func(cmd *cobra.Command, args []string, ctx context.Context) error) error {
 

@@ -1,5 +1,5 @@
-// Copyright (c) Alex Ellis 2017. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// Copyright (c) Forge4Flow DAO LLC 2024. All rights reserved.
+// Licensed under the MIT license.
 
 package proxy
 
@@ -35,12 +35,12 @@ func (c *Client) ListFunctions(ctx context.Context, namespace string) ([]types.F
 
 	getRequest, err := c.newRequest(http.MethodGet, queryPath, values, nil)
 	if err != nil {
-		return nil, fmt.Errorf("cannot connect to OpenFaaS on URL: %s", c.GatewayURL.String())
+		return nil, fmt.Errorf("cannot connect to Forge4Flow on URL: %s", c.GatewayURL.String())
 	}
 
 	res, err := c.doRequest(ctx, getRequest)
 	if err != nil {
-		return nil, fmt.Errorf("cannot connect to OpenFaaS on URL: %s", c.GatewayURL.String())
+		return nil, fmt.Errorf("cannot connect to Forge4Flow on URL: %s", c.GatewayURL.String())
 	}
 
 	if res.Body != nil {
@@ -52,14 +52,14 @@ func (c *Client) ListFunctions(ctx context.Context, namespace string) ([]types.F
 
 		bytesOut, err := io.ReadAll(res.Body)
 		if err != nil {
-			return nil, fmt.Errorf("cannot read result from OpenFaaS on URL: %s", c.GatewayURL.String())
+			return nil, fmt.Errorf("cannot read result from Forge4Flow on URL: %s", c.GatewayURL.String())
 		}
 		jsonErr := json.Unmarshal(bytesOut, &results)
 		if jsonErr != nil {
-			return nil, fmt.Errorf("cannot parse result from OpenFaaS on URL: %s\n%s", c.GatewayURL.String(), jsonErr.Error())
+			return nil, fmt.Errorf("cannot parse result from Forge4Flow on URL: %s\n%s", c.GatewayURL.String(), jsonErr.Error())
 		}
 	case http.StatusUnauthorized:
-		return nil, fmt.Errorf("unauthorized access, run \"faas-cli login\" to setup authentication for this server")
+		return nil, fmt.Errorf("unauthorized access, run \"forge-cli login\" to setup authentication for this server")
 	default:
 		bytesOut, err := io.ReadAll(res.Body)
 		if err == nil {

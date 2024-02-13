@@ -11,7 +11,7 @@ var mockStatParams string
 func setupFaas(statError error) {
 	yamlFile = ""
 	mockStatParams = ""
-	faasCmd.SetOutput(ioutil.Discard)
+	forgeCmd.SetOutput(ioutil.Discard)
 
 	stat = func(f string) (os.FileInfo, error) {
 		mockStatParams = f

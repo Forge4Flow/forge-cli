@@ -1,5 +1,5 @@
-// Copyright (c) Alex Ellis 2017. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// Copyright (c) Forge4Flow DAO LLC 2024. All rights reserved.
+// Licensed under the MIT license.
 
 package main
 
@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/openfaas/faas-cli/commands"
+	"github.com/forge4flow/forge-cli/commands"
 )
 
 func main() {

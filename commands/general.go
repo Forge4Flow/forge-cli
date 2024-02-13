@@ -8,7 +8,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/openfaas/faas-cli/proxy"
+	"github.com/forge4flow/forge-cli/proxy"
 	"github.com/openfaas/go-sdk"
 )
 

@@ -1,4 +1,4 @@
-// Copyright (c) OpenFaaS Author(s) 2017. All rights reserved.
+// Copyright (c) Forge4Flow Author(s) 2017. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 package commands
@@ -11,9 +11,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/openfaas/faas-cli/proxy"
+	"github.com/forge4flow/forge-cli/proxy"
 
-	"github.com/openfaas/faas-cli/config"
+	"github.com/forge4flow/forge-cli/config"
 	"github.com/spf13/cobra"
 )
 
@@ -31,16 +31,16 @@ func init() {
 	loginCmd.Flags().BoolVar(&tlsInsecure, "tls-no-verify", false, "Disable TLS validation")
 	loginCmd.Flags().Duration("timeout", time.Second*5, "Override the timeout for this API call")
 
-	faasCmd.AddCommand(loginCmd)
+	forgeCmd.AddCommand(loginCmd)
 }
 
 var loginCmd = &cobra.Command{
 	Use:   `login [--username admin|USERNAME] [--password PASSWORD] [--gateway GATEWAY_URL] [--tls-no-verify]`,
-	Short: "Log in to OpenFaaS gateway",
-	Long:  "Log in to OpenFaaS gateway.\nIf no gateway is specified, the default value will be used.",
-	Example: `  cat ~/faas_pass.txt | faas-cli login -u user --password-stdin
-  echo $PASSWORD | faas-cli login -s  --gateway https://openfaas.mydomain.com
-  faas-cli login -u user -p password`,
+	Short: "Log in to Forge4Flow gateway",
+	Long:  "Log in to Forge4Flow gateway.\nIf no gateway is specified, the default value will be used.",
+	Example: `  cat ~/faas_pass.txt | forge-cli login -u user --password-stdin
+  echo $PASSWORD | forge-cli login -s  --gateway https://forge.mydomain.com
+  forge-cli login -u user -p password`,
 	RunE: runLogin,
 }
 
@@ -56,7 +56,7 @@ func runLogin(cmd *cobra.Command, args []string) error {
 	}
 
 	if len(password) > 0 {
-		fmt.Println("WARNING! Using --password is insecure, consider using: cat ~/faas_pass.txt | faas-cli login -u user --password-stdin")
+		fmt.Println("WARNING! Using --password is insecure, consider using: cat ~/faas_pass.txt | forge-cli login -u user --password-stdin")
 		if passwordStdin {
 			return fmt.Errorf("--password and --password-stdin are mutually exclusive")
 		}
@@ -84,7 +84,7 @@ func runLogin(cmd *cobra.Command, args []string) error {
 		return fmt.Errorf("must provide a non-empty password via --password or --password-stdin")
 	}
 
-	fmt.Println("Calling the OpenFaaS server to validate the credentials...")
+	fmt.Println("Calling the Forge4Flow server to validate the credentials...")
 
 	gateway = getGatewayURL(gateway, defaultGateway, "", os.Getenv(openFaaSURLEnvironment))
 
@@ -131,7 +131,7 @@ func validateLogin(gatewayURL string, user string, pass string, timeout time.Dur
 	req.SetBasicAuth(user, pass)
 	res, err := client.Do(req)
 	if err != nil {
-		return fmt.Errorf("cannot connect to OpenFaaS on URL: %s. %v", gatewayURL, err)
+		return fmt.Errorf("cannot connect to Forge4Flow on URL: %s. %v", gatewayURL, err)
 	}
 
 	if res.Body != nil {

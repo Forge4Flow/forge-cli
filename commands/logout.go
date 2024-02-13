@@ -1,4 +1,4 @@
-// Copyright (c) OpenFaaS Author(s) 2017. All rights reserved.
+// Copyright (c) Forge4Flow Author(s) 2017. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 package commands
@@ -8,21 +8,21 @@ import (
 	"os"
 	"strings"
 
-	"github.com/openfaas/faas-cli/config"
+	"github.com/forge4flow/forge-cli/config"
 	"github.com/spf13/cobra"
 )
 
 func init() {
 	logoutCmd.Flags().StringVarP(&gateway, "gateway", "g", defaultGateway, "Gateway URL starting with http(s)://")
 
-	faasCmd.AddCommand(logoutCmd)
+	forgeCmd.AddCommand(logoutCmd)
 }
 
 var logoutCmd = &cobra.Command{
 	Use:     `logout [--gateway GATEWAY_URL]`,
-	Short:   "Log out from OpenFaaS gateway",
-	Long:    "Log out from OpenFaaS gateway.\nIf no gateway is specified, the default local one will be used.",
-	Example: `  faas-cli logout --gateway https://openfaas.mydomain.com`,
+	Short:   "Log out from Forge4Flow gateway",
+	Long:    "Log out from Forge4Flow gateway.\nIf no gateway is specified, the default local one will be used.",
+	Example: `  forge-cli logout --gateway https://forge.mydomain.com`,
 	RunE:    runLogout,
 }
 

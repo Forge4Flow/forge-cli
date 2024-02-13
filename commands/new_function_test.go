@@ -1,5 +1,5 @@
-// Copyright (c) Alex Ellis 2017. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// Copyright (c) Forge4Flow DAO LLC 2024. All rights reserved.
+// Licensed under the MIT license.
 
 package commands
 
@@ -10,8 +10,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/openfaas/faas-cli/stack"
-	"github.com/openfaas/faas-cli/test"
+	"github.com/forge4flow/forge-cli/stack"
+	"github.com/forge4flow/forge-cli/test"
 )
 
 const (
@@ -32,8 +32,8 @@ const (
 	NoTemplates          = `no language templates were found.
 
 Download templates:
-  faas-cli template pull           download the default templates
-  faas-cli template store list     view the community template store`
+  forge-cli template pull           download the default templates
+  forge-cli template store list     view the community template store`
 	InvalidFileSuffix = "when appending to a stack the suffix should be .yml or .yaml"
 )
 
@@ -125,8 +125,7 @@ func runNewFunctionTest(t *testing.T, nft NewFunctionTest) {
 	funcLang := nft.funcLang
 	dirName := nft.dirName
 	imagePrefix := nft.prefix
-	var funcYAML string
-	funcYAML = funcName + ".yml"
+	funcYAML := "functions.yml"
 
 	cmdParameters := []string{
 		"new",
@@ -143,8 +142,8 @@ func runNewFunctionTest(t *testing.T, nft NewFunctionTest) {
 		cmdParameters = append(cmdParameters, funcName)
 	}
 
-	faasCmd.SetArgs(cmdParameters)
-	execErr := faasCmd.Execute()
+	forgeCmd.SetArgs(cmdParameters)
+	execErr := forgeCmd.Execute()
 	if nft.expectedMsg == SuccessMsg {
 
 		// Make sure that the folder and file was created:
@@ -220,8 +219,8 @@ func Test_newFunctionListCmds(t *testing.T) {
 	}
 
 	stdOut := test.CaptureStdout(func() {
-		faasCmd.SetArgs(cmdParameters)
-		faasCmd.Execute()
+		forgeCmd.SetArgs(cmdParameters)
+		forgeCmd.Execute()
 	})
 
 	// Validate command output
@@ -236,8 +235,8 @@ func Test_newFunctionListNoTemplates(t *testing.T) {
 		"--list",
 	}
 
-	faasCmd.SetArgs(cmdParameters)
-	stdOut := faasCmd.Execute().Error()
+	forgeCmd.SetArgs(cmdParameters)
+	stdOut := forgeCmd.Execute().Error()
 
 	// Validate command output
 	if !strings.HasPrefix(stdOut, NoTemplates) {
@@ -259,55 +258,11 @@ func Test_languageNotExists(t *testing.T) {
 		"--list=false",
 	}
 
-	faasCmd.SetArgs(cmdParameters)
-	stdOut := faasCmd.Execute().Error()
+	forgeCmd.SetArgs(cmdParameters)
+	stdOut := forgeCmd.Execute().Error()
 
 	// Validate new function output
 	if found, err := regexp.MatchString(LangNotExistsOutput, stdOut); err != nil || !found {
-		t.Fatalf("Output is not as expected: %s\n", stdOut)
-	}
-}
-
-func Test_appendInvalidSuffix(t *testing.T) {
-	const functionName = "samplefunc"
-	const functionLang = "ruby"
-
-	templatePullLocalTemplateRepo(t)
-	defer tearDownFetchTemplates(t)
-
-	// Create function
-	parameters := []string{
-		"new",
-		functionName,
-		"--lang=" + functionLang,
-		"--append=" + functionName + ".txt",
-	}
-	faasCmd.SetArgs(parameters)
-	stdOut := faasCmd.Execute().Error()
-
-	if found, err := regexp.MatchString(InvalidFileSuffix, stdOut); err != nil || !found {
-		t.Fatalf("Output is not as expected: %s\n", stdOut)
-	}
-}
-
-func Test_appendInvalidFile(t *testing.T) {
-	const functionName = "samplefunc"
-	const functionLang = "ruby"
-
-	templatePullLocalTemplateRepo(t)
-	defer tearDownFetchTemplates(t)
-
-	// Create function
-	parameters := []string{
-		"new",
-		functionName,
-		"--lang=" + functionLang,
-		"--append=" + functionLang + ".yml",
-	}
-	faasCmd.SetArgs(parameters)
-	stdOut := faasCmd.Execute().Error()
-
-	if found, err := regexp.MatchString(InvalidFile, stdOut); err != nil || !found {
 		t.Fatalf("Output is not as expected: %s\n", stdOut)
 	}
 }
@@ -328,13 +283,12 @@ func Test_duplicateFunctionName(t *testing.T) {
 		functionName,
 		"--lang=" + functionLang,
 	}
-	faasCmd.SetArgs(parameters)
-	faasCmd.Execute()
+	forgeCmd.SetArgs(parameters)
+	forgeCmd.Execute()
 
 	// Attempt to create duplicate function
-	parameters = append(parameters, "--append="+functionName+".yml")
-	faasCmd.SetArgs(parameters)
-	stdOut := faasCmd.Execute().Error()
+	forgeCmd.SetArgs(parameters)
+	stdOut := forgeCmd.Execute().Error()
 
 	if found, err := regexp.MatchString(FunctionExistsOutput, stdOut); err != nil || !found {
 		t.Fatalf("Output is not as expected: %s\n", stdOut)
@@ -359,8 +313,8 @@ func Test_backfillTemplates(t *testing.T) {
 		functionName,
 		"--lang=" + functionLang,
 	}
-	faasCmd.SetArgs(parameters)
-	err := faasCmd.Execute()
+	forgeCmd.SetArgs(parameters)
+	err := forgeCmd.Execute()
 	if err != nil {
 		t.Fatalf("Failed to create function with custom template dir: %s\n", err.Error())
 	}

@@ -5,7 +5,7 @@ import (
 	"regexp"
 	"testing"
 
-	"github.com/openfaas/faas-cli/test"
+	"github.com/forge4flow/forge-cli/test"
 )
 
 func Test_storeDeploy_withNameFlag(t *testing.T) {
@@ -19,14 +19,14 @@ func Test_storeDeploy_withNameFlag(t *testing.T) {
 	defer s.Close()
 
 	stdOut := test.CaptureStdout(func() {
-		faasCmd.SetArgs([]string{
+		forgeCmd.SetArgs([]string{
 			"store",
 			"deploy",
 			"figlet",
 			"--gateway=" + s.URL,
 			"--name=foo",
 		})
-		faasCmd.Execute()
+		forgeCmd.Execute()
 	})
 
 	if found, err := regexp.MatchString(`(?m:Deployed)`, stdOut); err != nil || !found {
@@ -56,13 +56,13 @@ func Test_storeDeploy_withoutNameFlag(t *testing.T) {
 	defer s.Close()
 
 	stdOut := test.CaptureStdout(func() {
-		faasCmd.SetArgs([]string{
+		forgeCmd.SetArgs([]string{
 			"store",
 			"deploy",
 			"figlet",
 			"--gateway=" + s.URL,
 		})
-		faasCmd.Execute()
+		forgeCmd.Execute()
 	})
 
 	if found, err := regexp.MatchString(`(?m:Deployed)`, stdOut); err != nil || !found {

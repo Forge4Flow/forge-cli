@@ -1,4 +1,4 @@
-// Copyright (c) OpenFaaS Author(s) 2018. All rights reserved.
+// Copyright (c) Forge4Flow Author(s) 2018. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 package commands
@@ -9,15 +9,15 @@ import (
 	"os"
 	"sort"
 
-	"github.com/openfaas/faas-cli/builder"
-	v2 "github.com/openfaas/faas-cli/schema/store/v2"
+	"github.com/forge4flow/forge-cli/builder"
+	v2 "github.com/forge4flow/forge-cli/schema/store/v2"
 
-	"github.com/openfaas/faas-cli/proxy"
-	"github.com/openfaas/faas-cli/schema"
-	knativev1 "github.com/openfaas/faas-cli/schema/knative/v1"
-	openfaasv1 "github.com/openfaas/faas-cli/schema/openfaas/v1"
-	"github.com/openfaas/faas-cli/stack"
-	"github.com/openfaas/faas-cli/util"
+	"github.com/forge4flow/forge-cli/proxy"
+	"github.com/forge4flow/forge-cli/schema"
+	f4fV1 "github.com/forge4flow/forge-cli/schema/functions4flow/v1"
+	knativev1 "github.com/forge4flow/forge-cli/schema/knative/v1"
+	"github.com/forge4flow/forge-cli/stack"
+	"github.com/forge4flow/forge-cli/util"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 
@@ -26,7 +26,7 @@ import (
 
 const (
 	resourceKind      = "Function"
-	defaultAPIVersion = "openfaas.com/v1"
+	defaultAPIVersion = "forge4flow.com/v1"
 )
 
 var (
@@ -44,25 +44,25 @@ func init() {
 	generateCmd.Flags().StringVar(&fromStore, "from-store", "", "generate using a store image")
 	generateCmd.Flags().StringVar(&name, "name", "", "for use with --from-store, override the name for the Function CR")
 
-	generateCmd.Flags().StringVar(&api, "api", defaultAPIVersion, "CRD API version e.g openfaas.com/v1, serving.knative.dev/v1")
+	generateCmd.Flags().StringVar(&api, "api", defaultAPIVersion, "CRD API version e.g forge4flow.com/v1, serving.knative.dev/v1")
 	generateCmd.Flags().StringVarP(&crdFunctionNamespace, "namespace", "n", "openfaas-fn", "Kubernetes namespace for functions")
 	generateCmd.Flags().Var(&tagFormat, "tag", "Override latest tag on function Docker image, accepts 'digest', 'latest', 'sha', 'branch', 'describe'")
-	generateCmd.Flags().BoolVar(&envsubst, "envsubst", true, "Substitute environment variables in stack.yml file")
+	generateCmd.Flags().BoolVar(&envsubst, "envsubst", true, "Substitute environment variables in functions.yml file")
 	generateCmd.Flags().StringVar(&desiredArch, "arch", "x86_64", "Desired image arch. (Default x86_64)")
 	generateCmd.Flags().StringArrayVar(&annotationArgs, "annotation", []string{}, "Any annotations you want to add (to store functions only)")
 
-	faasCmd.AddCommand(generateCmd)
+	forgeCmd.AddCommand(generateCmd)
 }
 
 var generateCmd = &cobra.Command{
-	Use:   "generate --api=openfaas.com/v1 --yaml stack.yml --tag sha --namespace=openfaas-fn",
+	Use:   "generate --api=forge4flow.com/v1 --yaml functions.yml --tag sha --namespace=openfaas-fn",
 	Short: "Generate Kubernetes CRD YAML file",
 	Long:  `The generate command creates kubernetes CRD YAML file for functions`,
-	Example: `faas-cli generate --api=openfaas.com/v1 --yaml stack.yml | kubectl apply  -f -
-faas-cli generate --api=openfaas.com/v1 -f stack.yml
-faas-cli generate --api=serving.knative.dev/v1 -f stack.yml
-faas-cli generate --api=openfaas.com/v1 --namespace openfaas-fn -f stack.yml
-faas-cli generate --api=openfaas.com/v1 -f stack.yml --tag branch -n openfaas-fn`,
+	Example: `forge-cli generate --api=forge4flow.com/v1 --yaml functions.yml | kubectl apply  -f -
+forge-cli generate --api=forge4flow.com/v1 -f functions.yml
+forge-cli generate --api=serving.knative.dev/v1 -f functions.yml
+forge-cli generate --api=forge4flow.com/v1 --namespace openfaas-fn -f functions.yml
+forge-cli generate --api=forge4flow.com/v1 -f functions.yml --tag branch -n openfaas-fn`,
 	PreRunE: preRunGenerate,
 	RunE:    runGenerate,
 }
@@ -111,7 +111,7 @@ func runGenerate(cmd *cobra.Command, args []string) error {
 
 		services = stack.Services{
 			Provider: stack.Provider{
-				Name: "openfaas",
+				Name: "functions4flow",
 			},
 			Version: "1.0",
 		}
@@ -174,7 +174,7 @@ func runGenerate(cmd *cobra.Command, args []string) error {
 		}
 	} else {
 		fmt.Println(
-			`"stack.yml" file not found in the current directory.
+			`"functions.yml" file not found in the current directory.
 Use "--yaml" to pass a file or "--from-store" to generate using function store.`)
 		os.Exit(1)
 	}
@@ -227,7 +227,7 @@ func generateCRDYAML(services stack.Services, format schema.BuildFormat, apiVers
 			metadata := schema.Metadata{Name: name, Namespace: namespace}
 			imageName := schema.BuildImageName(format, function.Image, version, branch)
 
-			spec := openfaasv1.Spec{
+			spec := f4fV1.Spec{
 				Name:                   name,
 				Image:                  imageName,
 				Environment:            allEnvironment,
@@ -240,7 +240,7 @@ func generateCRDYAML(services stack.Services, format schema.BuildFormat, apiVers
 				ReadOnlyRootFilesystem: function.ReadOnlyRootFilesystem,
 			}
 
-			crd := openfaasv1.CRD{
+			crd := f4fV1.CRD{
 				APIVersion: apiVersion,
 				Kind:       resourceKind,
 				Metadata:   metadata,

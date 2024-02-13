@@ -1,4 +1,4 @@
-// Copyright (c) OpenFaaS Author(s) 2023. All rights reserved.
+// Copyright (c) Forge4Flow Author(s) 2023. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 package commands
@@ -7,7 +7,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/openfaas/faas-cli/util"
+	"github.com/forge4flow/forge-cli/util"
 	"github.com/openfaas/faas-provider/types"
 	"github.com/spf13/cobra"
 )
@@ -26,10 +26,10 @@ var namespaceUpdateCmd = &cobra.Command{
 			[--annotation ANNOTATION=VALUE ...]`,
 	Short: "Update a namespace",
 	Long:  "Update a namespace",
-	Example: `  faas-cli namespace update NAME
-  faas-cli namespace update NAME --label demo=true
-  faas-cli namespace update NAME --annotation demo=true
-  faas-cli namespace update NAME --label demo=true \
+	Example: `  forge-cli namespace update NAME
+  forge-cli namespace update NAME --label demo=true
+  forge-cli namespace update NAME --annotation demo=true
+  forge-cli namespace update NAME --label demo=true \
     --annotation demo=true`,
 	RunE:    updateNamespace,
 	PreRunE: preUpdateNamespace,

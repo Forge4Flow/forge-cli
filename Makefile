@@ -33,32 +33,32 @@ local-goimports:
 .PHONY: local-install
 local-install:
 	CGO_ENABLED=0 go install --ldflags "-s -w \
-	   -X github.com/openfaas/faas-cli/version.GitCommit=${.GIT_COMMIT} \
-	   -X github.com/openfaas/faas-cli/version.Version=${.GIT_VERSION}" \
+	   -X github.com/forge4flow/forge-cli/version.GitCommit=${.GIT_COMMIT} \
+	   -X github.com/forge4flow/forge-cli/version.Version=${.GIT_VERSION}" \
 	   
 
 .PHONY: dist
 dist:
 	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build --ldflags "-s -w \
-	   -X github.com/openfaas/faas-cli/version.GitCommit=${.GIT_COMMIT} \
-	   -X github.com/openfaas/faas-cli/version.Version=${.GIT_VERSION}" \
-	    -o ./bin/faas-cli
+	   -X github.com/forge4flow/forge-cli/version.GitCommit=${.GIT_COMMIT} \
+	   -X github.com/forge4flow/forge-cli/version.Version=${.GIT_VERSION}" \
+	    -o ./bin/forge-cli
 
 	CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build --ldflags "-s -w \
-	   -X github.com/openfaas/faas-cli/version.GitCommit=${.GIT_COMMIT} \
-	   -X github.com/openfaas/faas-cli/version.Version=${.GIT_VERSION}" \
-	    -o ./bin/faas-cli-darwin
+	   -X github.com/forge4flow/forge-cli/version.GitCommit=${.GIT_COMMIT} \
+	   -X github.com/forge4flow/forge-cli/version.Version=${.GIT_VERSION}" \
+	    -o ./bin/forge-cli-darwin
 
 	CGO_ENABLED=0 GOOS=darwin GOARCH=arm64 go build --ldflags "-s -w \
-	   -X github.com/openfaas/faas-cli/version.GitCommit=${.GIT_COMMIT} \
-	   -X github.com/openfaas/faas-cli/version.Version=${.GIT_VERSION}" \
-	    -o ./bin/faas-cli-darwin-arm64
+	   -X github.com/forge4flow/forge-cli/version.GitCommit=${.GIT_COMMIT} \
+	   -X github.com/forge4flow/forge-cli/version.Version=${.GIT_VERSION}" \
+	    -o ./bin/forge-cli-darwin-arm64
 
 
 	CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build --ldflags "-s -w \
-	   -X github.com/openfaas/faas-cli/version.GitCommit=${.GIT_COMMIT} \
-	   -X github.com/openfaas/faas-cli/version.Version=${.GIT_VERSION}" \
-	    -o ./bin/faas-cli.exe
+	   -X github.com/forge4flow/forge-cli/version.GitCommit=${.GIT_COMMIT} \
+	   -X github.com/forge4flow/forge-cli/version.Version=${.GIT_VERSION}" \
+	    -o ./bin/forge-cli.exe
 
 
 .PHONY: test-unit
@@ -67,7 +67,7 @@ test-unit:
 
 .PHONY: ci-armhf-push
 ci-armhf-push:
-	(docker push openfaas/faas-cli:$(TAG)-armhf && docker push openfaas/faas-cli:$(TAG)-root-armhf)
+	(docker push forge4flow/forge-cli:$(TAG)-armhf && docker push forge4flow/forge-cli:$(TAG)-root-armhf)
 
 .PHONY: ci-armhf-build
 ci-armhf-build:
@@ -75,7 +75,7 @@ ci-armhf-build:
 
 .PHONY: ci-arm64-push
 ci-arm64-push:
-	(docker push openfaas/faas-cli:$(TAG)-arm64 && docker push openfaas/faas-cli:$(TAG)-root-arm64)
+	(docker push forge4flow/forge-cli:$(TAG)-arm64 && docker push forge4flow/forge-cli:$(TAG)-root-arm64)
 
 .PHONY: ci-arm64-build
 ci-arm64-build:

@@ -1,5 +1,5 @@
-// Copyright (c) Alex Ellis 2017. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// Copyright (c) Forge4Flow DAO LLC 2024. All rights reserved.
+// Licensed under the MIT license.
 
 package proxy
 
@@ -11,7 +11,7 @@ import (
 
 	"regexp"
 
-	"github.com/openfaas/faas-cli/test"
+	"github.com/forge4flow/forge-cli/test"
 )
 
 func Test_InvokeFunction(t *testing.T) {
@@ -108,7 +108,7 @@ func Test_InvokeFunction_MissingURLPrefix(t *testing.T) {
 		t.Fatalf("Error was not returned")
 	}
 
-	expectedErrMsg := "cannot connect to OpenFaaS on URL:"
+	expectedErrMsg := "cannot connect to Forge4Flow on URL:"
 	r := regexp.MustCompile(fmt.Sprintf("(?m:%s)", expectedErrMsg))
 	if !r.MatchString(err.Error()) {
 		t.Fatalf("Want: %s\nGot: %s", expectedErrMsg, err.Error())

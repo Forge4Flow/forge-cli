@@ -1,4 +1,4 @@
-// Copyright (c) OpenFaaS Author(s) 2020. All rights reserved.
+// Copyright (c) Forge4Flow Author(s) 2020. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 package commands
@@ -34,7 +34,7 @@ func init() {
 	registryLoginCommand.Flags().String("account-id", "", "Your AWS Account id")
 	registryLoginCommand.Flags().String("region", "", "Your AWS region")
 
-	faasCmd.AddCommand(registryLoginCommand)
+	forgeCmd.AddCommand(registryLoginCommand)
 }
 
 func generateRegistryPreRun(command *cobra.Command, args []string) error {

@@ -32,12 +32,12 @@ func (c *Client) GetSecretList(ctx context.Context, namespace string) ([]types.S
 	getRequest, err := c.newRequest(http.MethodGet, secretPath, query, nil)
 
 	if err != nil {
-		return nil, fmt.Errorf("cannot connect to OpenFaaS on URL: %s", c.GatewayURL.String())
+		return nil, fmt.Errorf("cannot connect to Forge4Flow on URL: %s", c.GatewayURL.String())
 	}
 
 	res, err := c.doRequest(ctx, getRequest)
 	if err != nil {
-		return nil, fmt.Errorf("cannot connect to OpenFaaS on URL: %s", c.GatewayURL.String())
+		return nil, fmt.Errorf("cannot connect to Forge4Flow on URL: %s", c.GatewayURL.String())
 	}
 
 	if res.Body != nil {
@@ -49,16 +49,16 @@ func (c *Client) GetSecretList(ctx context.Context, namespace string) ([]types.S
 
 		bytesOut, err := io.ReadAll(res.Body)
 		if err != nil {
-			return nil, fmt.Errorf("cannot read result from OpenFaaS on URL: %s", c.GatewayURL.String())
+			return nil, fmt.Errorf("cannot read result from Forge4Flow on URL: %s", c.GatewayURL.String())
 		}
 
 		jsonErr := json.Unmarshal(bytesOut, &results)
 		if jsonErr != nil {
-			return nil, fmt.Errorf("cannot parse result from OpenFaaS on URL: %s\n%s", c.GatewayURL.String(), jsonErr.Error())
+			return nil, fmt.Errorf("cannot parse result from Forge4Flow on URL: %s\n%s", c.GatewayURL.String(), jsonErr.Error())
 		}
 
 	case http.StatusUnauthorized:
-		return nil, fmt.Errorf("unauthorized access, run \"faas-cli login\" to setup authentication for this server")
+		return nil, fmt.Errorf("unauthorized access, run \"forge-cli login\" to setup authentication for this server")
 
 	default:
 		bytesOut, err := io.ReadAll(res.Body)
@@ -70,7 +70,7 @@ func (c *Client) GetSecretList(ctx context.Context, namespace string) ([]types.S
 	return results, nil
 }
 
-// UpdateSecret update a secret via the OpenFaaS API by name
+// UpdateSecret update a secret via the Forge4Flow API by name
 func (c *Client) UpdateSecret(ctx context.Context, secret types.Secret) (int, string) {
 	var output string
 	reqBytes, _ := json.Marshal(&secret)
@@ -80,13 +80,13 @@ func (c *Client) UpdateSecret(ctx context.Context, secret types.Secret) (int, st
 	putRequest, err := c.newRequest(http.MethodPut, secretEndpoint, query, bytes.NewBuffer(reqBytes))
 
 	if err != nil {
-		output += fmt.Sprintf("cannot connect to OpenFaaS on URL: %s", c.GatewayURL.String())
+		output += fmt.Sprintf("cannot connect to Forge4Flow on URL: %s", c.GatewayURL.String())
 		return http.StatusInternalServerError, output
 	}
 
 	res, err := c.doRequest(ctx, putRequest)
 	if err != nil {
-		output += fmt.Sprintf("cannot connect to OpenFaaS on URL: %s", c.GatewayURL.String())
+		output += fmt.Sprintf("cannot connect to Forge4Flow on URL: %s", c.GatewayURL.String())
 		return http.StatusInternalServerError, output
 	}
 
@@ -103,7 +103,7 @@ func (c *Client) UpdateSecret(ctx context.Context, secret types.Secret) (int, st
 		output += fmt.Sprintf("unable to find secret: %s", secret.Name)
 
 	case http.StatusUnauthorized:
-		output += fmt.Sprintf("unauthorized access, run \"faas-cli login\" to setup authentication for this server")
+		output += fmt.Sprintf("unauthorized access, run \"forge-cli login\" to setup authentication for this server")
 
 	default:
 		bytesOut, err := io.ReadAll(res.Body)
@@ -115,7 +115,7 @@ func (c *Client) UpdateSecret(ctx context.Context, secret types.Secret) (int, st
 	return res.StatusCode, output
 }
 
-// RemoveSecret remove a secret via the OpenFaaS API by name
+// RemoveSecret remove a secret via the Forge4Flow API by name
 func (c *Client) RemoveSecret(ctx context.Context, secret types.Secret) error {
 	body, _ := json.Marshal(secret)
 
@@ -123,12 +123,12 @@ func (c *Client) RemoveSecret(ctx context.Context, secret types.Secret) error {
 
 	req, err := c.newRequest(http.MethodDelete, secretEndpoint, query, bytes.NewBuffer(body))
 	if err != nil {
-		return fmt.Errorf("cannot connect to OpenFaaS on URL: %s", c.GatewayURL.String())
+		return fmt.Errorf("cannot connect to Forge4Flow on URL: %s", c.GatewayURL.String())
 	}
 
 	res, err := c.doRequest(ctx, req)
 	if err != nil {
-		return fmt.Errorf("cannot connect to OpenFaaS on URL: %s", c.GatewayURL.String())
+		return fmt.Errorf("cannot connect to Forge4Flow on URL: %s", c.GatewayURL.String())
 	}
 
 	if res.Body != nil {
@@ -141,7 +141,7 @@ func (c *Client) RemoveSecret(ctx context.Context, secret types.Secret) error {
 	case http.StatusNotFound:
 		return fmt.Errorf("unable to find secret: %s", secret.Name)
 	case http.StatusUnauthorized:
-		return fmt.Errorf("unauthorized access, run \"faas-cli login\" to setup authentication for this server")
+		return fmt.Errorf("unauthorized access, run \"forge-cli login\" to setup authentication for this server")
 
 	default:
 		bytesOut, err := io.ReadAll(res.Body)
@@ -163,13 +163,13 @@ func (c *Client) CreateSecret(ctx context.Context, secret types.Secret) (int, st
 	request, err := c.newRequest(http.MethodPost, secretEndpoint, query, reader)
 
 	if err != nil {
-		output += fmt.Sprintf("cannot connect to OpenFaaS on URL: %s\n", c.GatewayURL.String())
+		output += fmt.Sprintf("cannot connect to Forge4Flow on URL: %s\n", c.GatewayURL.String())
 		return http.StatusInternalServerError, output
 	}
 
 	res, err := c.doRequest(ctx, request)
 	if err != nil {
-		output += fmt.Sprintf("cannot connect to OpenFaaS on URL: %s\n", c.GatewayURL.String())
+		output += fmt.Sprintf("cannot connect to Forge4Flow on URL: %s\n", c.GatewayURL.String())
 		return http.StatusInternalServerError, output
 	}
 
@@ -182,7 +182,7 @@ func (c *Client) CreateSecret(ctx context.Context, secret types.Secret) (int, st
 		output += fmt.Sprintf("Created: %s\n", res.Status)
 
 	case http.StatusUnauthorized:
-		output += fmt.Sprintln("unauthorized access, run \"faas-cli login\" to setup authentication for this server")
+		output += fmt.Sprintln("unauthorized access, run \"forge-cli login\" to setup authentication for this server")
 
 	case http.StatusConflict:
 		output += fmt.Sprintf("secret with the name %q already exists\n", secret.Name)

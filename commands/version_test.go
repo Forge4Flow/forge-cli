@@ -1,5 +1,5 @@
-// Copyright (c) Alex Ellis 2017. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// Copyright (c) Forge4Flow DAO LLC 2024. All rights reserved.
+// Licensed under the MIT license.
 
 package commands
 
@@ -10,19 +10,19 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/openfaas/faas-cli/test"
-	"github.com/openfaas/faas-cli/version"
+	"github.com/forge4flow/forge-cli/test"
+	"github.com/forge4flow/forge-cli/version"
 )
 
 func Test_addVersionDev(t *testing.T) {
 	version.GitCommit = "sha-test"
 
 	stdOut := test.CaptureStdout(func() {
-		faasCmd.SetArgs([]string{
+		forgeCmd.SetArgs([]string{
 			"version",
 			"--warn-update=false",
 		})
-		faasCmd.Execute()
+		forgeCmd.Execute()
 	})
 
 	expected := "commit:  sha-test"
@@ -41,11 +41,11 @@ func Test_addVersion(t *testing.T) {
 	version.Version = "version.tag"
 
 	stdOut := test.CaptureStdout(func() {
-		faasCmd.SetArgs([]string{
+		forgeCmd.SetArgs([]string{
 			"version",
 			"--warn-update=false",
 		})
-		faasCmd.Execute()
+		forgeCmd.Execute()
 	})
 
 	expected := "commit:  sha-test"
@@ -63,12 +63,12 @@ func Test_addVersion_short_version(t *testing.T) {
 	version.Version = "version.tag"
 
 	stdOut := test.CaptureStdout(func() {
-		faasCmd.SetArgs([]string{
+		forgeCmd.SetArgs([]string{
 			"version",
 			"--warn-update=false",
 			"--short-version",
 		})
-		faasCmd.Execute()
+		forgeCmd.Execute()
 	})
 
 	if found, err := regexp.MatchString("^version\\.tag", stdOut); err != nil || !found {
@@ -165,12 +165,12 @@ func executeVersionCmd(t *testing.T, responseBody string) (versionInfo string, g
 	defer s.Close()
 
 	stdOut := test.CaptureStdout(func() {
-		faasCmd.SetArgs([]string{
+		forgeCmd.SetArgs([]string{
 			"version",
 			"--gateway=" + s.URL,
 			"--warn-update=false",
 		})
-		faasCmd.Execute()
+		forgeCmd.Execute()
 	})
 
 	return stdOut, s.URL

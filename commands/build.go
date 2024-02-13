@@ -1,5 +1,5 @@
-// Copyright (c) Alex Ellis 2017. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// Copyright (c) Forge4Flow DAO LLC 2024. All rights reserved.
+// Licensed under the MIT license.
 
 package commands
 
@@ -11,13 +11,13 @@ import (
 	"sync"
 	"time"
 
+	"github.com/forge4flow/forge-cli/builder"
+	"github.com/forge4flow/forge-cli/schema"
+	"github.com/forge4flow/forge-cli/stack"
+	"github.com/forge4flow/forge-cli/util"
 	"github.com/morikuni/aec"
-	"github.com/openfaas/faas-cli/builder"
-	"github.com/openfaas/faas-cli/schema"
-	"github.com/openfaas/faas-cli/stack"
-	"github.com/openfaas/faas-cli/util"
 
-	"github.com/openfaas/faas-cli/versioncontrol"
+	"github.com/forge4flow/forge-cli/versioncontrol"
 	"github.com/spf13/cobra"
 )
 
@@ -56,20 +56,20 @@ func init() {
 	buildCmd.Flags().Var(&tagFormat, "tag", "Override latest tag on function Docker image, accepts 'digest', 'sha', 'branch', or 'describe', or 'latest'")
 	buildCmd.Flags().StringArrayVar(&buildLabels, "build-label", []string{}, "Add a label for Docker image (LABEL=VALUE)")
 	buildCmd.Flags().StringArrayVar(&copyExtra, "copy-extra", []string{}, "Extra paths that will be copied into the function build context")
-	buildCmd.Flags().BoolVar(&envsubst, "envsubst", true, "Substitute environment variables in stack.yml file")
+	buildCmd.Flags().BoolVar(&envsubst, "envsubst", true, "Substitute environment variables in functions.yml file")
 	buildCmd.Flags().BoolVar(&quietBuild, "quiet", false, "Perform a quiet build, without showing output from Docker")
-	buildCmd.Flags().BoolVar(&disableStackPull, "disable-stack-pull", false, "Disables the template configuration in the stack.yml")
+	buildCmd.Flags().BoolVar(&disableStackPull, "disable-stack-pull", false, "Disables the template configuration in the functions.yml")
 
 	// Set bash-completion.
 	_ = buildCmd.Flags().SetAnnotation("handler", cobra.BashCompSubdirsInDir, []string{})
 
-	faasCmd.AddCommand(buildCmd)
+	forgeCmd.AddCommand(buildCmd)
 }
 
-// buildCmd allows the user to build an OpenFaaS function container
+// buildCmd allows the user to build an Forge4Flow function container
 var buildCmd = &cobra.Command{
 	Use: `build -f YAML_FILE [--no-cache] [--squash]
-  faas-cli build --image IMAGE_NAME
+  forge-cli build --image IMAGE_NAME
                  --handler HANDLER_DIR
                  --name FUNCTION_NAME
                  [--lang <ruby|python|python3|node|csharp|dockerfile>]
@@ -81,21 +81,21 @@ var buildCmd = &cobra.Command{
                  [--build-option VALUE]
                  [--copy-extra PATH]
                  [--tag <sha|branch|describe>]`,
-	Short: "Builds OpenFaaS function containers",
-	Long: `Builds OpenFaaS function containers either via the supplied YAML config using
+	Short: "Builds Forge4Flow function containers",
+	Long: `Builds Forge4Flow function containers either via the supplied YAML config using
 the "--yaml" flag (which may contain multiple function definitions), or directly
 via flags.`,
-	Example: `  faas-cli build -f https://domain/path/myfunctions.yml
-  faas-cli build -f ./stack.yml --no-cache --build-arg NPM_VERSION=0.2.2
-  faas-cli build -f ./stack.yml --build-option dev
-  faas-cli build -f ./stack.yml --tag sha
-  faas-cli build -f ./stack.yml --tag branch
-  faas-cli build -f ./stack.yml --tag describe
-  faas-cli build -f ./stack.yml --filter "*gif*"
-  faas-cli build -f ./stack.yml --regex "fn[0-9]_.*"
-  faas-cli build --image=my_image --lang=python --handler=/path/to/fn/
+	Example: `  forge-cli build -f https://domain/path/myfunctions.yml
+  forge-cli build -f ./functions.yml --no-cache --build-arg NPM_VERSION=0.2.2
+  forge-cli build -f ./functions.yml --build-option dev
+  forge-cli build -f ./functions.yml --tag sha
+  forge-cli build -f ./functions.yml --tag branch
+  forge-cli build -f ./functions.yml --tag describe
+  forge-cli build -f ./functions.yml --filter "*gif*"
+  forge-cli build -f ./functions.yml --regex "fn[0-9]_.*"
+  forge-cli build --image=my_image --lang=python --handler=/path/to/fn/
                  --name=my_fn --squash
-  faas-cli build -f ./stack.yml --build-label org.label-schema.label-name="value"`,
+  forge-cli build -f ./functions.yml --build-label org.label-schema.label-name="value"`,
 	PreRunE: preRunBuild,
 	RunE:    runBuild,
 }
@@ -176,7 +176,7 @@ func runBuild(cmd *cobra.Command, args []string) error {
 	} else {
 		templateAddress := getTemplateURL("", os.Getenv(templateURLEnvironment), DefaultTemplateRepository)
 		if pullErr := pullTemplates(templateAddress); pullErr != nil {
-			return fmt.Errorf("could not pull templates for OpenFaaS: %v", pullErr)
+			return fmt.Errorf("could not pull templates for Forge4Flow: %v", pullErr)
 		}
 	}
 

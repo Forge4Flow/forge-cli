@@ -1,4 +1,4 @@
-// Copyright (c) OpenFaaS Author(s) 2023. All rights reserved.
+// Copyright (c) Forge4Flow Author(s) 2023. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 package commands
@@ -7,7 +7,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/openfaas/faas-cli/util"
+	"github.com/forge4flow/forge-cli/util"
 	"github.com/openfaas/faas-provider/types"
 	"github.com/spf13/cobra"
 )
@@ -26,10 +26,10 @@ var namespaceCreateCmd = &cobra.Command{
 			[--annotation ANNOTATION=VALUE ...]`,
 	Short: "Create a new namespace",
 	Long:  "Create command creates a new namespace",
-	Example: `  faas-cli namespace create NAME
-  faas-cli namespace create NAME --label demo=true
-  faas-cli namespace create NAME --annotation demo=true
-  faas-cli namespace create NAME --label demo=true \
+	Example: `  forge-cli namespace create NAME
+  forge-cli namespace create NAME --label demo=true
+  forge-cli namespace create NAME --annotation demo=true
+  forge-cli namespace create NAME --label demo=true \
     --annotation demo=true`,
 	RunE:    createNamespace,
 	PreRunE: preCreateNamespace,

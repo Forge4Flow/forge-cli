@@ -1,5 +1,5 @@
-// Copyright (c) Alex Ellis 2017. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// Copyright (c) Forge4Flow DAO LLC 2024. All rights reserved.
+// Licensed under the MIT license.
 
 package proxy
 
@@ -55,7 +55,7 @@ func InvokeFunction(gateway string, name string, bytesIn *[]byte, contentType st
 	if err != nil {
 		fmt.Println()
 		fmt.Println(err)
-		return nil, fmt.Errorf("cannot connect to OpenFaaS on URL: %s", gateway)
+		return nil, fmt.Errorf("cannot connect to Forge4Flow on URL: %s", gateway)
 	}
 
 	req.Header.Add("Content-Type", contentType)
@@ -73,7 +73,7 @@ func InvokeFunction(gateway string, name string, bytesIn *[]byte, contentType st
 	if err != nil {
 		fmt.Println()
 		fmt.Println(err)
-		return nil, fmt.Errorf("cannot connect to OpenFaaS on URL: %s", gateway)
+		return nil, fmt.Errorf("cannot connect to Forge4Flow on URL: %s", gateway)
 	}
 
 	if res.Body != nil {
@@ -87,10 +87,10 @@ func InvokeFunction(gateway string, name string, bytesIn *[]byte, contentType st
 		var readErr error
 		resBytes, readErr = io.ReadAll(res.Body)
 		if readErr != nil {
-			return nil, fmt.Errorf("cannot read result from OpenFaaS on URL: %s %s", gateway, readErr)
+			return nil, fmt.Errorf("cannot read result from Forge4Flow on URL: %s %s", gateway, readErr)
 		}
 	case http.StatusUnauthorized:
-		return nil, fmt.Errorf("unauthorized access, run \"faas-cli login\" to setup authentication for this server")
+		return nil, fmt.Errorf("unauthorized access, run \"forge-cli login\" to setup authentication for this server")
 	default:
 		bytesOut, err := io.ReadAll(res.Body)
 		if err == nil {

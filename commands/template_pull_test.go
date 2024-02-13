@@ -1,5 +1,5 @@
-// Copyright (c) Alex Ellis 2017. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// Copyright (c) Forge4Flow DAO LLC 2024. All rights reserved.
+// Licensed under the MIT license.
 package commands
 
 import (
@@ -19,8 +19,8 @@ func Test_templatePull(t *testing.T) {
 	t.Run("ValidRepo", func(t *testing.T) {
 		defer tearDownFetchTemplates(t)
 
-		faasCmd.SetArgs([]string{"template", "pull", localTemplateRepository})
-		err := faasCmd.Execute()
+		forgeCmd.SetArgs([]string{"template", "pull", localTemplateRepository})
+		err := forgeCmd.Execute()
 		if err != nil {
 			t.Errorf("unexpected error while puling valid repo: %s", err.Error())
 		}
@@ -34,8 +34,8 @@ func Test_templatePull(t *testing.T) {
 	t.Run("WithOverwriting", func(t *testing.T) {
 		defer tearDownFetchTemplates(t)
 
-		faasCmd.SetArgs([]string{"template", "pull", localTemplateRepository})
-		err := faasCmd.Execute()
+		forgeCmd.SetArgs([]string{"template", "pull", localTemplateRepository})
+		err := forgeCmd.Execute()
 		if err != nil {
 			t.Errorf("unexpected error while executing template pull: %s", err.Error())
 		}
@@ -45,8 +45,8 @@ func Test_templatePull(t *testing.T) {
 
 		r := regexp.MustCompile(`(?m:Cannot overwrite the following \d+ template\(s\):)`)
 
-		faasCmd.SetArgs([]string{"template", "pull", localTemplateRepository})
-		err = faasCmd.Execute()
+		forgeCmd.SetArgs([]string{"template", "pull", localTemplateRepository})
+		err = forgeCmd.Execute()
 		if err != nil {
 			t.Errorf("unexpected error while executing template pull: %s", err.Error())
 		}
@@ -57,8 +57,8 @@ func Test_templatePull(t *testing.T) {
 
 		buf.Reset()
 
-		faasCmd.SetArgs([]string{"template", "pull", localTemplateRepository, "--overwrite"})
-		err = faasCmd.Execute()
+		forgeCmd.SetArgs([]string{"template", "pull", localTemplateRepository, "--overwrite"})
+		err = forgeCmd.Execute()
 		if err != nil {
 			t.Errorf("unexpected error while executing template pull with --overwrite: %s", err.Error())
 		}
@@ -75,8 +75,8 @@ func Test_templatePull(t *testing.T) {
 	})
 
 	t.Run("InvalidUrlError", func(t *testing.T) {
-		faasCmd.SetArgs([]string{"template", "pull", "user@host.xz:openfaas/faas-cli.git"})
-		err := faasCmd.Execute()
+		forgeCmd.SetArgs([]string{"template", "pull", "user@host.xz:forge4flow/forge-cli.git"})
+		err := forgeCmd.Execute()
 		want := "the repository URL must be a valid git repo uri"
 		got := err.Error()
 		if !strings.Contains(err.Error(), want) {
@@ -129,8 +129,8 @@ func templatePullLocalTemplateRepo(t *testing.T) {
 	localTemplateRepository := setupLocalTemplateRepo(t)
 	defer os.RemoveAll(localTemplateRepository)
 
-	faasCmd.SetArgs([]string{"template", "pull", localTemplateRepository})
-	err := faasCmd.Execute()
+	forgeCmd.SetArgs([]string{"template", "pull", localTemplateRepository})
+	err := forgeCmd.Execute()
 	if err != nil {
 		fmt.Printf("error while executing template pull: %s", err.Error())
 	}

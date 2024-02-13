@@ -1,5 +1,5 @@
-// Copyright (c) Alex Ellis 2017. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// Copyright (c) Forge4Flow DAO LLC 2024. All rights reserved.
+// Licensed under the MIT license.
 
 package builder
 
@@ -19,9 +19,9 @@ import (
 	"strings"
 
 	v2execute "github.com/alexellis/go-execute/v2"
-	"github.com/openfaas/faas-cli/schema"
-	"github.com/openfaas/faas-cli/stack"
-	vcs "github.com/openfaas/faas-cli/versioncontrol"
+	"github.com/forge4flow/forge-cli/schema"
+	"github.com/forge4flow/forge-cli/stack"
+	vcs "github.com/forge4flow/forge-cli/versioncontrol"
 )
 
 // AdditionalPackageBuildArg holds the special build-arg keyname for use with build-opts.

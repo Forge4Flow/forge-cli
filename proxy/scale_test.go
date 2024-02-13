@@ -9,7 +9,7 @@ import (
 
 	"regexp"
 
-	"github.com/openfaas/faas-cli/test"
+	"github.com/forge4flow/forge-cli/test"
 )
 
 func Test_ScaleFunction(t *testing.T) {

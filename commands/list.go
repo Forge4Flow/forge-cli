@@ -1,5 +1,5 @@
-// Copyright (c) Alex Ellis 2017. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// Copyright (c) Forge4Flow DAO LLC 2024. All rights reserved.
+// Licensed under the MIT license.
 
 package commands
 
@@ -9,8 +9,8 @@ import (
 	"os"
 	"sort"
 
-	"github.com/openfaas/faas-cli/proxy"
-	"github.com/openfaas/faas-cli/stack"
+	"github.com/forge4flow/forge-cli/proxy"
+	"github.com/forge4flow/forge-cli/stack"
 	"github.com/openfaas/faas-provider/types"
 	"github.com/spf13/cobra"
 )
@@ -29,20 +29,20 @@ func init() {
 
 	listCmd.Flags().BoolVarP(&verboseList, "verbose", "v", false, "Verbose output for the function list")
 	listCmd.Flags().BoolVar(&tlsInsecure, "tls-no-verify", false, "Disable TLS validation")
-	listCmd.Flags().BoolVar(&envsubst, "envsubst", true, "Substitute environment variables in stack.yml file")
+	listCmd.Flags().BoolVar(&envsubst, "envsubst", true, "Substitute environment variables in functions.yml file")
 	listCmd.Flags().StringVarP(&token, "token", "k", "", "Pass a JWT token to use instead of basic auth")
 	listCmd.Flags().StringVar(&sortOrder, "sort", "name", "Sort the functions by \"name\" or \"invocations\"")
 
-	faasCmd.AddCommand(listCmd)
+	forgeCmd.AddCommand(listCmd)
 }
 
 var listCmd = &cobra.Command{
 	Use:     `list [--gateway GATEWAY_URL] [--verbose] [--tls-no-verify]`,
 	Aliases: []string{"ls"},
-	Short:   "List OpenFaaS functions",
-	Long:    `Lists OpenFaaS functions either on a local or remote gateway`,
-	Example: `  faas-cli list
-  faas-cli list --gateway https://127.0.0.1:8080 --verbose`,
+	Short:   "List Forge4Flow functions",
+	Long:    `Lists Forge4Flow functions either on a local or remote gateway`,
+	Example: `  forge-cli list
+  forge-cli list --gateway https://127.0.0.1:8080 --verbose`,
 	RunE: runList,
 }
 
