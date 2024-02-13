@@ -133,6 +133,11 @@ Download templates:
 
 	var fileName, outputMsg string
 
+	// Verify handerDir is set
+	if handlerDir == "" {
+		handlerDir = functionName
+	}
+
 	if _, err := os.Stat(handlerDir); err == nil {
 		return fmt.Errorf("folder: %s already exists", handlerDir)
 	}
