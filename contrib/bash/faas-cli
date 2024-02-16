@@ -1,4 +1,4 @@
-# bash completion for faas-cli                             -*- shell-script -*-
+# bash completion for forge-cli                             -*- shell-script -*-
 
 __faas-cli_debug()
 {
@@ -384,7 +384,7 @@ _faas-cli_version()
 
 _faas-cli()
 {
-    last_command="faas-cli"
+    last_command="forge-cli"
     commands=()
     commands+=("build")
     commands+=("remove")
@@ -410,7 +410,7 @@ _faas-cli()
     noun_aliases=()
 }
 
-__start_faas-cli()
+__start_forge-cli()
 {
     local cur prev words cword
     declare -A flaghash 2>/dev/null || :
@@ -426,7 +426,7 @@ __start_faas-cli()
     local local_nonpersistent_flags=()
     local flags_with_completion=()
     local flags_completion=()
-    local commands=("faas-cli")
+    local commands=("forge-cli")
     local must_have_one_flag=()
     local must_have_one_noun=()
     local last_command
@@ -436,9 +436,9 @@ __start_faas-cli()
 }
 
 if [[ $(type -t compopt) = "builtin" ]]; then
-    complete -o default -F __start_faas-cli faas-cli
+    complete -o default -F __start_forge-cli forge-cli
 else
-    complete -o default -o nospace -F __start_faas-cli faas-cli
+    complete -o default -o nospace -F __start_forge-cli forge-cli
 fi
 
 # ex: ts=4 sw=4 et filetype=sh

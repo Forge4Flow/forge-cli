@@ -38,7 +38,7 @@ var loginCmd = &cobra.Command{
 	Use:   `login [--username admin|USERNAME] [--password PASSWORD] [--gateway GATEWAY_URL] [--tls-no-verify]`,
 	Short: "Log in to Forge4Flow gateway",
 	Long:  "Log in to Forge4Flow gateway.\nIf no gateway is specified, the default value will be used.",
-	Example: `  cat ~/faas_pass.txt | forge-cli login -u user --password-stdin
+	Example: `  cat ~/forge_pass.txt | forge-cli login -u user --password-stdin
   echo $PASSWORD | forge-cli login -s  --gateway https://forge.mydomain.com
   forge-cli login -u user -p password`,
 	RunE: runLogin,
@@ -56,7 +56,7 @@ func runLogin(cmd *cobra.Command, args []string) error {
 	}
 
 	if len(password) > 0 {
-		fmt.Println("WARNING! Using --password is insecure, consider using: cat ~/faas_pass.txt | forge-cli login -u user --password-stdin")
+		fmt.Println("WARNING! Using --password is insecure, consider using: cat ~/forge_pass.txt | forge-cli login -u user --password-stdin")
 		if passwordStdin {
 			return fmt.Errorf("--password and --password-stdin are mutually exclusive")
 		}
