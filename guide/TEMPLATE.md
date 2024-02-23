@@ -83,7 +83,7 @@ forge-cli template pull
 You may specify the branch or tag pulled by adding a URL fragment with the branch or tag name. For example, to pull the `1.0` tag of the default template repository, use
 
 ```bash
-forge-cli template pull https://github.com/openfaas/templates#1.0
+forge-cli template pull https://github.com/forge4flow/templates#1.0
 ```
 
 If a branch or tag is not specified, the repositories default branch is pulled (usually `master`).

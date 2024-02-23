@@ -28,15 +28,15 @@ func Test_getTemplateStoreURL(t *testing.T) {
 			title:       "Environmental variable is unset but argument is set which should set URL as argument",
 			envURL:      "",
 			defaultURL:  DefaultTemplatesStore,
-			argURL:      "https://github.com/openfaas/store/official",
-			expectedURL: "https://github.com/openfaas/store/official",
+			argURL:      "https://github.com/forge4flow/store/official",
+			expectedURL: "https://github.com/forge4flow/store/official",
 		},
 		{
 			title:       "Environmental variable is set and argument is set which should set URL as argument",
 			envURL:      "https://github.com/custom/url",
 			defaultURL:  DefaultTemplatesStore,
-			argURL:      "https://github.com/openfaas/store/official",
-			expectedURL: "https://github.com/openfaas/store/official",
+			argURL:      "https://github.com/forge4flow/store/official",
+			expectedURL: "https://github.com/forge4flow/store/official",
 		},
 	}
 	// defaultURL is always present that is why we don't test that case

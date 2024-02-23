@@ -15,7 +15,7 @@ import (
 )
 
 // DefaultTemplateRepository contains the Git repo for the official templates
-const DefaultTemplateRepository = "https://github.com/openfaas/templates.git"
+const DefaultTemplateRepository = "https://github.com/Forge4Flow/f4f-templates.git"
 
 const templateDirectory = "./template/"
 

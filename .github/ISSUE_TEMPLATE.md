@@ -18,7 +18,7 @@
 
 ## Who is this for?
 
-What company is this for? Are you listed in the [ADOPTERS.md](https://github.com/openfaas/faas/blob/master/ADOPTERS.md) file?
+What company is this for? Are you listed in the [ADOPTERS.md](https://github.com/forge4flow/faas/blob/master/ADOPTERS.md) file?
 
 ## Are you a GitHub Sponsor (Yes/No?)
 

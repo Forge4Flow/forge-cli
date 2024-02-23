@@ -41,7 +41,7 @@ func getInputStoreFunctions(t *testing.T) []storeV2.StoreFunction {
         },
         "fprocess": "node main.js",
         "network": "func_functions",
-        "repo_url": "https://github.com/openfaas/faas/tree/master/sample-functions/NodeInfo"
+        "repo_url": "https://github.com/forge4flow/faas/tree/master/sample-functions/NodeInfo"
     },
     {
         "title": "sha512sum",
@@ -52,7 +52,7 @@ func getInputStoreFunctions(t *testing.T) []storeV2.StoreFunction {
         },
         "fprocess": "sha512sum",
         "network": "func_functions",
-        "repo_url": "https://github.com/openfaas/faas/tree/master/sample-functions/AlpineFunction"
+        "repo_url": "https://github.com/forge4flow/faas/tree/master/sample-functions/AlpineFunction"
     },
     {
         "title": "Figlet",
@@ -63,7 +63,7 @@ func getInputStoreFunctions(t *testing.T) []storeV2.StoreFunction {
             "x86_64": "functions/figlet:0.9.6"
         },
         "fprocess": "figlet",
-        "repo_url": "https://github.com/openfaas/faas/tree/master/sample-functions/figlet"
+        "repo_url": "https://github.com/forge4flow/faas/tree/master/sample-functions/figlet"
 	}]`)
 
 	var inputFunctions []storeV2.StoreFunction
@@ -87,7 +87,7 @@ func Test_filterStoreList_x86_64(t *testing.T) {
         },
         "fprocess": "node main.js",
         "network": "func_functions",
-        "repo_url": "https://github.com/openfaas/faas/tree/master/sample-functions/NodeInfo"
+        "repo_url": "https://github.com/forge4flow/faas/tree/master/sample-functions/NodeInfo"
     }, {
 		"title": "Figlet",
         "name": "figlet",
@@ -97,7 +97,7 @@ func Test_filterStoreList_x86_64(t *testing.T) {
             "x86_64": "functions/figlet:0.9.6"
         },
         "fprocess": "figlet",
-        "repo_url": "https://github.com/openfaas/faas/tree/master/sample-functions/figlet"
+        "repo_url": "https://github.com/forge4flow/faas/tree/master/sample-functions/figlet"
 	}]`)
 
 	inputFunctions := getInputStoreFunctions(t)
@@ -124,7 +124,7 @@ func Test_filterStoreList_armhf(t *testing.T) {
         },
         "fprocess": "node main.js",
         "network": "func_functions",
-        "repo_url": "https://github.com/openfaas/faas/tree/master/sample-functions/NodeInfo"
+        "repo_url": "https://github.com/forge4flow/faas/tree/master/sample-functions/NodeInfo"
     }, {
 		"title": "Figlet",
         "name": "figlet",
@@ -134,7 +134,7 @@ func Test_filterStoreList_armhf(t *testing.T) {
             "x86_64": "functions/figlet:0.9.6"
         },
         "fprocess": "figlet",
-        "repo_url": "https://github.com/openfaas/faas/tree/master/sample-functions/figlet"
+        "repo_url": "https://github.com/forge4flow/faas/tree/master/sample-functions/figlet"
 	}]`)
 
 	inputFunctions := getInputStoreFunctions(t)
@@ -161,7 +161,7 @@ func Test_filterStoreList_arm64(t *testing.T) {
         },
         "fprocess": "node main.js",
         "network": "func_functions",
-        "repo_url": "https://github.com/openfaas/faas/tree/master/sample-functions/NodeInfo"
+        "repo_url": "https://github.com/forge4flow/faas/tree/master/sample-functions/NodeInfo"
     },{
         "title": "sha512sum",
         "name": "sha512sum",
@@ -171,7 +171,7 @@ func Test_filterStoreList_arm64(t *testing.T) {
         },
         "fprocess": "sha512sum",
         "network": "func_functions",
-        "repo_url": "https://github.com/openfaas/faas/tree/master/sample-functions/AlpineFunction"
+        "repo_url": "https://github.com/forge4flow/faas/tree/master/sample-functions/AlpineFunction"
     }]`)
 
 	inputFunctions := getInputStoreFunctions(t)

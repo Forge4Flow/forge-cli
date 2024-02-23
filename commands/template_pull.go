@@ -32,8 +32,8 @@ directory from the root of the repo, if it exists.
 [REPOSITORY_URL] may specify a specific branch or tag to copy by adding a URL fragment with the branch or tag name.
 	`,
 	Example: `
-  forge-cli template pull https://github.com/openfaas/templates
-  forge-cli template pull https://github.com/openfaas/templates#1.0
+  forge-cli template pull https://github.com/forge4flow/templates
+  forge-cli template pull https://github.com/forge4flow/templates#1.0
 `,
 	RunE: runTemplatePull,
 }
